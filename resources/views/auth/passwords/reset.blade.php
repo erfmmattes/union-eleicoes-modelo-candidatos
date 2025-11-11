@@ -1,0 +1,85 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="largura-colt">
+            <div class="card mt-5">
+                <div class="card-header text-center fundo-log">Redefinir senha</div>
+
+                <div class="card-body">
+                    <form method="POST" action="{{ route('admin.password.update') }}">
+                        @csrf
+
+                        <input type="hidden" name="token" value="{{ $token }}">
+
+                        <div class="row mb-3">
+                            <div>
+                                <input id="email" type="email" placeholder="E-mail" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
+
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div>
+                                <input id="password" type="password" placeholder="Senha" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div>
+                                <input id="password-confirm" placeholder="Confirmar sua senha" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                            </div>
+                        </div>
+
+                        <div class="row mb-0">
+                            <div>
+                                <button type="submit" class="btn botao-login">
+                                    Redefinir senha
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+<!-- -------------- Início - Estillos CSS ------------------ -->
+ <style>
+    .fundo-log {
+        background: linear-gradient(135deg, #183F77, #4A90E2);
+        color: #ffffff !important;
+        font-weight: 600 !important;
+        font-size: 18px !important;
+    }
+    .largura-colt {
+        width: 500px !important;
+    }
+    .botao-login {
+        background: linear-gradient(135deg, #183F77, #4A90E2);
+        color: #ffffff !important;
+        font-weight: 500 !important;
+        width: 100% !important;
+        font-weight: 600 !important;
+    }
+    .botao-login:hover {
+        background: linear-gradient(135deg, #122b55, #3570c2);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        font-weight: 700 !important;
+    }
+ </style>
+ <!-- -------------- Final - Estillos CSS ------------------ -->
