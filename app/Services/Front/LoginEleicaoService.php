@@ -7,6 +7,8 @@ use App\Repositories\Admin\RelatorioLogsEleitorRepository;
 use App\Repositories\Front\LogRepository;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AvisoTrocaDeSenhaMail;
 use Exception;
 
 class LoginEleicaoService
@@ -170,6 +172,7 @@ class LoginEleicaoService
             $atualizaStatusTrocaSenha = $this->loginEleicaoRepository->atualizarStatusTrocaSenhaPosLogin($eleitorId);
 
             if ($atualizado) {
+                Mail::to($eleitor->email)->send(new AvisoTrocaDeSenhaMail($eleitor->nome));
                 $this->relatorioLogsEleitorRepository->criarLog(
                     session('eleitor_id'),
                     session('eleitor_nome'),

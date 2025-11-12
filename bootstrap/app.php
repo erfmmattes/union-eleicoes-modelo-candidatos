@@ -21,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'verifica.sessao.front' => \App\Http\Middleware\VerificaTempoSessaoFront::class,
             'sessao.unica.front' => \App\Http\Middleware\VerificaSessaoUnicaFront::class,
             'periodo.eleicao' => \App\Http\Middleware\VerificaPeriodoEleicao::class,
+            'verifica.troca.senha' => \App\Http\Middleware\VerificaTrocaSenha::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

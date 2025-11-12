@@ -8,7 +8,7 @@ use App\Repositories\Front\LogRepository;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use App\Mail\RecuperarSenhaMail;
+use App\Mail\AvisoTrocaDeSenhaMail;
 use Illuminate\Support\Facades\Session;
 use Exception;
 
@@ -75,7 +75,7 @@ class TrocarSenhaFrontService
             }
 
             $atualizado = $this->trocarSenhaFrontRepository->atualizarSenha($eleitorId, bcrypt($dados['nova_senha']));
-
+            Mail::to($eleitor->email)->send(new AvisoTrocaDeSenhaMail($eleitor->nome));
             if ($atualizado) {
                 $this->relatorioLogsEleitorRepository->criarLog(
                     session('eleitor_id'),

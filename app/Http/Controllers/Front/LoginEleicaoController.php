@@ -13,7 +13,7 @@ class LoginEleicaoController extends Controller
 
     public function __construct(LoginEleicaoService $loginEleicaoService)
     {
-        $this->middleware(['sessao.unica.front', 'periodo.eleicao']);
+        $this->middleware(['sessao.unica.front', 'periodo.eleicao', 'verifica.troca.senha']);
         $this->loginEleicaoService = $loginEleicaoService;
     }
 
