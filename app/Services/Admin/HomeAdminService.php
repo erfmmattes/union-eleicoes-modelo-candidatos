@@ -4,17 +4,22 @@ namespace App\Services\Admin;
 
 use App\Repositories\Admin\HomeAdminRepository;
 use App\Repositories\Admin\ConfiguracoesRepository;
+use App\Repositories\Front\LogRepository;
 
 class HomeAdminService
 {
     protected HomeAdminRepository $homeAdminRepository;
+    protected ConfiguracoesRepository $configuracoesRepository;
+    protected LogRepository $logRepository;
 
     public function __construct(
         HomeAdminRepository $homeAdminRepository,
         ConfiguracoesRepository $configuracoesRepository,
-    ){
+        LogRepository $logRepository
+    ) {
         $this->homeAdminRepository = $homeAdminRepository;
         $this->configuracoesRepository = $configuracoesRepository;
+        $this->logRepository = $logRepository;
     }
 
     public function usuariosAtivos()

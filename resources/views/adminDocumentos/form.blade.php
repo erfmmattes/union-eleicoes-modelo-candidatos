@@ -60,7 +60,7 @@
         value="1" 
         {{ old('ativo', $documento->ativo ?? false) ? 'checked' : '' }}
     >
-    <label class="form-check-label fw-semibold" for="ativo">
+    <label class="form-check-label fw-semibold c-pointer" for="ativo">
         Documento ativo
     </label>
 </div>

@@ -84,7 +84,7 @@
 
                                         @if($todasPermissoes['ajuda']['editar'] === true)
                                             <a href="{{ route('admin.adminAjuda.edit', $ajuda->id) }}" title="Editar" class="btn btn-sm btn-outline-primary mb-2 mb-md-0 me-md-2">
-                                                <i class="fa-solid fa-pen"></i>
+                                                <i class="fas fa-edit"></i>
                                             </a>
                                         @endif
 
@@ -133,7 +133,7 @@
                     <p class="text-muted small">Esta ação não poderá ser desfeita.</p>
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
-                    <button type="button" class="btn bot-cancelar px-4" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn bot-cancela px-4" data-bs-dismiss="modal">Cancelar</button>
                     <form action="{{ route('admin.adminAjuda.destroy', $ajuda->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
@@ -184,11 +184,11 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     font-weight: 600 !important;
 }
-.bot-cancelar {
+.bot-cancela {
     background: linear-gradient(135deg, #6c757d, #6c757d);
     color: #fff !important;
 }
-.bot-cancelar:hover {
+.bot-cancela:hover {
     background: linear-gradient(135deg, #6c757d, #6c757d);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);

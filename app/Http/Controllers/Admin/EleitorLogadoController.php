@@ -29,14 +29,12 @@ class EleitorLogadoController extends Controller
         }
         $filtros = $request->only(['q', 'perPage']);
         $listaEleitoresLogados = $this->eleitorLogadoService->listarTodos($filtros);
-        // dd($listaEleitoresLogados);
         return view('adminEleitorLogado.index', compact('listaEleitoresLogados'));
     }
 
     public function show(int $id)
     {
         $listaDeEleitor = $this->eleitorLogadoService->obterDetalhes($id);
-        // dd($listaDeEleitor);
 
         if (!$listaDeEleitor) {
             return redirect()->route('admin.adminEleitorLogado.index')

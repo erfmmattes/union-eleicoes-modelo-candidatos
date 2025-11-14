@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\DeclaracaoEleicaoController;
 use App\Http\Controllers\Admin\EleitoresAdminController;
 use App\Http\Controllers\Admin\DocumentosAdminController;
 use App\Http\Controllers\Admin\AjudaAdminController;
+use App\Http\Controllers\Admin\EtapaCandidatoController;
 use App\Http\Controllers\Admin\DadosEleicaoController;
 use App\Http\Controllers\Admin\EleitorLogadoController;
 use App\Http\Controllers\Admin\ListaEleitoresController;
@@ -171,6 +172,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/ajuda/{id}', [AjudaAdminController::class, 'show'])->name('adminAjuda.show');
     Route::delete('/ajuda/{id}', [AjudaAdminController::class, 'destroy'])->name('adminAjuda.destroy');
     Route::post('/ajuda/{id}/status', [AjudaAdminController::class, 'status'])->name('adminAjuda.status');
+
+    // Etapas do Admin
+    Route::get('/etapa', [EtapaCandidatoController::class, 'index'])->name('adminEtapa.index');
+    Route::get('/etapa/create', [EtapaCandidatoController::class, 'create'])->name('adminEtapa.create');
+    Route::post('/etapa', [EtapaCandidatoController::class, 'store'])->name('adminEtapa.store');
+    Route::get('/etapa/{id}', [EtapaCandidatoController::class, 'show'])->name('adminEtapa.show');
+    Route::get('/etapa/{id}/edit', [EtapaCandidatoController::class, 'edit'])->name('adminEtapa.edit');
+    Route::put('/etapa/{id}', [EtapaCandidatoController::class, 'update'])->name('adminEtapa.update');
+    Route::delete('/etapa/{id}', [EtapaCandidatoController::class, 'destroy'])->name('adminEtapa.destroy');
+    Route::post('etapas/{id}/status', [EtapaCandidatoController::class, 'toggleStatus'])->name('adminEtapa.status');
 
     // Dados da Eleição do Admin
     Route::get('/dados-eleicao', [DadosEleicaoController::class, 'index'])->name('adminDadosEleicao.index');

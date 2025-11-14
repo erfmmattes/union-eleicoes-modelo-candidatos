@@ -1,5 +1,5 @@
 @extends('layouts.appMasterAdmin')
-@section('title', 'Union Eleições - Documentos')
+@section('title', 'Union Eleições - Etapas de Candidatos')
 
 @section('content')
 <div class="container">
@@ -7,39 +7,38 @@
 
         <!-- Cabeçalho -->
         <div class="mb-5">
-            <h1 class="h2 fw-bolder text-dark">Gerenciamento de Documentos</h1>
+            <h1 class="h2 fw-bolder text-dark">Gerenciamento de Etapas de Candidatos</h1>
             <p class="text-muted mt-1">
-                Crie, edite, visualize e exclua documentos do sistema.
+                Crie, organize e controle as etapas de escolha dos candidatos.
             </p>
         </div>
 
         <!-- Filtro / Busca -->
         <div class="card shadow-lg border-0 rounded-3 stat-card mb-4 px-4 py-3">
-            <form action="{{ route('admin.adminDocumentos.index') }}" method="GET" class="row g-2 align-items-center form-o">
-                <div class="col-md-5">
-                    <input type="text" name="q" value="{{ request('q') }}" class="form-control tam-in" placeholder="Pesquisar por título ou descrição">
+            <form action="{{ route('admin.adminEtapa.index') }}" method="GET" class="row g-2 align-items-center form-o">
+
+                <div class="col-md-6">
+                    <input type="text" name="q" value="{{ request('q') }}" 
+                           class="form-control tam-in" placeholder="Pesquisar por nome da etapa">
                 </div>
-                <div class="col-md-3">
-                    <select name="tipo" class="form-select tam-in">
-                        <option value="">Todos os tipos</option>
-                        @foreach($documentos->pluck('tipo')->unique()->filter()->values() as $tipo)
-                            <option value="{{ $tipo }}" {{ request('tipo') == $tipo ? 'selected' : '' }}>{{ $tipo }}</option>
-                        @endforeach
-                    </select>
-                </div>
+
                 <div class="col-md-2">
-                    <select name="ativo" class="form-select tam-in">
+                    <select name="status" class="form-select tam-in">
                         <option value="">Status</option>
-                        <option value="1" {{ request('ativo') === '1' ? 'selected' : '' }}>Ativo</option>
-                        <option value="0" {{ request('ativo') === '0' ? 'selected' : '' }}>Inativo</option>
+                        <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>Ativo</option>
+                        <option value="0" {{ request('status') === '0' ? 'selected' : '' }}>Inativo</option>
                     </select>
                 </div>
-                <div class="col-md-2 d-flex">
+
+                <div class="col-md-4 d-flex">
                     <button type="submit" title="Buscar" class="btn botao-buscar me-2 w-100">
                         <i class="fas fa-search"></i>
                     </button>
-                    @if($todasPermissoes['documentos']['criar'] === true)
-                        <a href="{{ route('admin.adminDocumentos.create') }}" title="Criar" class="btn botao-buscar w-100">
+
+                    @if($todasPermissoes['etapas']['criar'] === true)
+                        <a href="{{ route('admin.adminEtapa.create') }}" 
+                        title="Criar" 
+                        class="btn botao-buscar w-100">
                             <i class="fas fa-plus"></i>
                         </a>
                     @endif
@@ -47,14 +46,14 @@
             </form>
         </div>
 
-        <!-- Tabela de Documentos -->
+        <!-- Tabela -->
         <div class="card shadow-lg border-0 rounded-3 stat-card">
             <div class="card-body p-3 p-md-5">
 
                 @if(session('success'))
                     <div class="alert alert-success alert-dismissible fade show alert-temporaria" role="alert">
                         {{ session('success') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
                 @endif
 
@@ -63,66 +62,60 @@
                         <thead class="table-light bod-tabled">
                             <tr>
                                 <th>ID</th>
-                                <th>Título</th>
-                                <th>Tipo</th>
-                                <th>Arquivo</th>
+                                <th>Nome</th>
                                 <th>Sequência</th>
-                                @if($todasPermissoes['documentos']['editar'] === true)
-                                    <th>Status</th>
-                                @endif
+                                <th>Status</th>
                                 <th class="text-center">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($documentos as $doc)
+                            @forelse($etapas as $etapa)
                                 <tr>
-                                    <td class="fw-semibold text-dark">{{ $doc->id }}</td>
-                                    <td>{{ \Illuminate\Support\Str::limit($doc->titulo, 40) }}</td>
-                                    <td>{{ \Illuminate\Support\Str::limit($doc->tipo, 20) }}</td>
+                                    <td class="fw-semibold text-dark">{{ $etapa->id }}</td>
+                                    <td>{{ $etapa->nome }}</td>
+                                    <td>{{ $etapa->sequencia }}</td>
+
                                     <td>
-                                        @if($doc->arquivo && $doc->caminho)
-                                            <a href="{{ asset('storage/' . $doc->caminho) }}" target="_blank" class="text-decoration-none">
-                                                <i class="fas fa-download me-1"></i> {{ $doc->arquivo }}
-                                            </a>
-                                        @else
-                                            <span class="text-muted small">Sem arquivo</span>
-                                        @endif
+                                        <button class="btn btn-sm toggle-status-btn {{ $etapa->status ? 'btn-success' : 'btn-secondary' }}"
+                                                data-id="{{ $etapa->id }}">
+                                            {{ $etapa->status ? 'Ativo' : 'Inativo' }}
+                                        </button>
                                     </td>
-                                    <td>
-                                        {{ $doc->sequencia }}
-                                    </td>
-                                    @if($todasPermissoes['documentos']['editar'] === true)
-                                        <td>
-                                            <button class="btn btn-sm toggle-ativo-btn {{ $doc->ativo ? 'btn-success' : 'btn-secondary' }}" title="{{ $doc->ativo ? 'Inativar' : 'Ativar' }}"
-                                                    data-id="{{ $doc->id }}">
-                                                {{ $doc->ativo ? 'Ativo' : 'Inativo' }}
-                                            </button>
-                                        </td>
-                                    @endif
+
                                     <td class="text-center">
                                         <div class="d-flex justify-content-center align-items-center flex-column flex-md-row">
-                                            @if($todasPermissoes['documentos']['ver'] === true)
-                                                <a href="{{ route('admin.adminDocumentos.show', $doc->id) }}" title="Ver" class="btn btn-sm btn-outline-primary mb-2 mb-md-0 me-md-2">
+
+                                            @if($todasPermissoes['etapas']['ver'] === true)
+                                                <a href="{{ route('admin.adminEtapa.show', $etapa->id) }}" title="Ver" class="btn btn-sm btn-outline-primary mb-2 mb-md-0 me-md-2">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
                                             @endif
 
-                                            @if($todasPermissoes['documentos']['editar'] === true)
-                                                <a href="{{ route('admin.adminDocumentos.edit', $doc->id) }}" title="Editar" class="btn btn-sm btn-outline-primary mb-2 mb-md-0 me-md-2">
+                                            @if($todasPermissoes['etapas']['editar'] === true)
+                                                <a href="{{ route('admin.adminEtapa.edit', $etapa->id) }}" 
+                                                title="Editar" 
+                                                class="btn btn-sm btn-outline-primary mb-2 mb-md-0 me-md-2">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
                                             @endif
 
-                                            <button type="button" class="btn btn-sm btn-outline-danger" title="Excluir" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ $doc->id }}">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
+                                            @if($todasPermissoes['etapas']['deletar'] === true)
+                                                <button type="button" 
+                                                        class="btn btn-sm btn-outline-danger" 
+                                                        title="Excluir" 
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#deleteEtapa{{ $etapa->id }}">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            @endif
+
                                         </div>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="8" class="text-center text-muted py-4">
-                                        Nenhum documento encontrado.
+                                    <td colspan="5" class="text-center text-muted py-4">
+                                        Nenhuma etapa encontrada.
                                     </td>
                                 </tr>
                             @endforelse
@@ -130,37 +123,34 @@
                     </table>
                 </div>
 
-                {{-- Paginação --}}
-                @if(method_exists($documentos, 'links'))
+                {{-- Paginação (se existir) --}}
+                @if(method_exists($etapas, 'links'))
                     <div class="mt-4 custom-pagination-wrapper">
-                        {{ $documentos->links('pagination::bootstrap-5') }}
+                        {{ $etapas->links('pagination::bootstrap-5') }}
                     </div>
                 @endif
+
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modais de Confirmação -->
-@foreach ($documentos as $doc)
-    <div class="modal fade" id="confirmDeleteModal{{ $doc->id }}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel{{ $doc->id }}" aria-hidden="true">
+<!-- Modais de Exclusão -->
+@foreach ($etapas as $etapa)
+    <div class="modal fade" id="deleteEtapa{{ $etapa->id }}" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow-lg rounded-3">
                 <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title m-auto" id="confirmDeleteModalLabel{{ $doc->id }}">
-                        Confirmar Exclusão
-                    </h5>
+                    <h5 class="modal-title m-auto">Confirmar Exclusão</h5>
                 </div>
                 <div class="modal-body text-center">
                     <i class="fas fa-exclamation-triangle fa-3x text-danger mb-3"></i>
-                    <p class="fs-6">Deseja realmente excluir o documento <strong>{{ $doc->titulo }}</strong>?</p>
-                    <p class="text-muted small">Esta ação não poderá ser desfeita.</p>
+                    <p class="fs-6">Deseja realmente excluir a etapa <strong>{{ $etapa->nome }}</strong>?</p>
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
                     <button type="button" class="btn bot-cancela px-4" data-bs-dismiss="modal">Cancelar</button>
-                    <form action="{{ route('admin.adminDocumentos.destroy', $doc->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
+                    <form action="{{ route('admin.adminEtapa.destroy', $etapa->id) }}" method="POST">
+                        @csrf @method('DELETE')
                         <button type="submit" class="btn botao-confirmar px-4">Sim, Excluir</button>
                     </form>
                 </div>
@@ -274,25 +264,24 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const urlStatusTemplate = "{{ route('admin.adminDocumentos.status', ['id' => 'ID_DOC']) }}";
+    const urlTemplate = "{{ route('admin.adminEtapa.status', ['id' => 'ID_ETAPA']) }}";
 
-    document.querySelectorAll('.toggle-ativo-btn').forEach(btn => {
+    document.querySelectorAll('.toggle-status-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             const id = this.dataset.id;
-            const url = urlStatusTemplate.replace('ID_DOC', id);
+            const url = urlTemplate.replace('ID_ETAPA', id);
 
             fetch(url, {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
                 },
             })
-            .then(response => response.json())
+            .then(res => res.json())
             .then(data => {
                 if (data.success) {
-                    if (data.ativo) {
+                    if (data.status) {
                         this.classList.remove('btn-secondary');
                         this.classList.add('btn-success');
                         this.textContent = 'Ativo';
@@ -302,8 +291,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         this.textContent = 'Inativo';
                     }
                 }
-            })
-            .catch(err => console.error(err));
+            });
         });
     });
 });

@@ -239,22 +239,43 @@
                         </ul>
                     </li>
 
-                    <!-- Perguntas -->
+                    <!-- Candidatos -->
                     <li class="nav-item">
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#perguntasMenu" aria-expanded="false">
-                            <i class="fa-solid fa-question"></i> Perguntas <i class="fas fa-chevron-down float-end"></i>
-                        </a>
-                        <ul class="collapse nav flex-column ms-3" id="perguntasMenu" data-bs-parent="#accordionSidebar">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <i class="fa-solid fa-file"></i> Documentos
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <i class="fa-solid fa-info"></i> Ajuda
-                                </a>
-                            </li>
+                        @php
+                            $menuAtivo = Str::startsWith(Route::currentRouteName(), ['admin.adminEtapa.']);
+                        @endphp
+
+                        @if ($permissoesService->verificarPermissao('candidatos', 'ver'))
+                            <a class="nav-link {{ $menuAtivo ? '' : 'collapsed' }}" 
+                                href="#" 
+                                data-bs-toggle="collapse" 
+                                data-bs-target="#candidatosMenu" 
+                                aria-expanded="{{ $menuAtivo ? 'true' : 'false' }}">
+                                    <i class="fa-solid fa-users"></i> Candidatos 
+                                    <i class="fas fa-chevron-down float-end"></i>
+                            </a>
+                        @endif
+
+                        <ul class="collapse nav flex-column ms-3 {{ $menuAtivo ? 'show' : '' }}" 
+                            id="candidatosMenu" 
+                            data-bs-parent="#accordionSidebar">
+
+                            @if ($permissoesService->verificarPermissao('etapas', 'ver'))
+                                <li class="nav-item">
+                                    <a class="nav-link {{ Str::startsWith(Route::currentRouteName(), 'admin.adminEtapa.') ? 'active' : '' }}" href="{{ route('admin.adminEtapa.index') }}">
+                                        <i class="fa-solid fa-list-ol"></i> Etapas
+                                    </a>
+                                </li>
+                            @endif
+
+                            @if ($permissoesService->verificarPermissao('escolhas', 'ver'))
+                                <li class="nav-item">
+                                    <a class="nav-link {{ Str::startsWith(Route::currentRouteName(), 'admin.adminDocumentos.') ? 'active' : '' }}" 
+                                    href="{{ route('admin.adminDocumentos.index') }}">
+                                        <i class="fa-regular fa-circle-dot"></i> Escolhas
+                                    </a>
+                                </li>
+                            @endif
                         </ul>
                     </li>
 
