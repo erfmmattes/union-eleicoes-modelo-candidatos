@@ -35,11 +35,13 @@
                         <i class="fas fa-search"></i>
                     </button>
 
-                    <a href="{{ route('admin.adminEscolhas.create') }}"
-                       title="Criar"
-                       class="btn botao-buscar w-100">
-                        <i class="fas fa-plus"></i>
-                    </a>
+                    @if($todasPermissoes['escolhas']['criar'] === true)
+                        <a href="{{ route('admin.adminEscolhas.create') }}"
+                        title="Criar"
+                        class="btn botao-buscar w-100">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    @endif
                 </div>
             </form>
         </div>
@@ -73,7 +75,9 @@
                                 <th>Cargo</th>
                                 <th>Etapa</th>
                                 <th>Sequência</th>
-                                <th>Status</th>
+                                @if($todasPermissoes['escolhas']['editar'] === true)
+                                    <th>Status</th>
+                                @endif
                                 <th>Foto</th>
                                 <th class="text-center">Ações</th>
                             </tr>
@@ -84,16 +88,24 @@
                                 <tr>
                                     <td class="fw-semibold text-dark">{{ $escolha->id }}</td>
                                     <td>{{ \Illuminate\Support\Str::limit($escolha->nome, 40) }}</td>
-                                    <td>{{ $escolha->cargo }}</td>
+                                    <td>
+                                        @if($escolha->cargo != null)
+                                            {{ $escolha->cargo }}
+                                        @else
+                                            <label title="Não Definido">N/D</label>
+                                        @endif
+                                    </td>
                                     <td>{{ $escolha->etapa->nome }}</td>
                                     <td>{{ $escolha->sequencia }}</td>
 
-                                    <td>
-                                        <button class="btn btn-sm toggle-status-btn {{ $escolha->status ? 'btn-success' : 'btn-secondary' }}"
-                                                data-id="{{ $escolha->id }}">
-                                            {{ $escolha->status ? 'Ativo' : 'Inativo' }}
-                                        </button>
-                                    </td>
+                                    @if($todasPermissoes['escolhas']['editar'] === true)
+                                        <td>
+                                            <button class="btn btn-sm toggle-status-btn {{ $escolha->status ? 'btn-success' : 'btn-secondary' }}"
+                                                    data-id="{{ $escolha->id }}">
+                                                {{ $escolha->status ? 'Ativo' : 'Inativo' }}
+                                            </button>
+                                        </td>
+                                    @endif
 
                                     <td>
                                         @if($escolha->tem_foto)
@@ -106,19 +118,29 @@
                                     <td class="text-center">
                                         <div class="d-flex justify-content-center align-items-center flex-column flex-md-row">
 
-                                            <a href="{{ route('admin.adminEscolhas.edit', $escolha->id) }}"
-                                               title="Editar"
-                                               class="btn btn-sm btn-outline-primary mb-2 mb-md-0 me-md-2">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
+                                            @if($todasPermissoes['escolhas']['ver'] === true)
+                                                <a href="{{ route('admin.adminEscolhas.show', $escolha->id) }}" title="Ver" class="btn btn-sm btn-outline-primary mb-2 mb-md-0 me-md-2">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            @endif
 
-                                            <button type="button"
-                                                    class="btn btn-sm btn-outline-danger"
-                                                    title="Excluir"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#deleteEscolha{{ $escolha->id }}">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
+                                            @if($todasPermissoes['escolhas']['editar'] === true)
+                                                <a href="{{ route('admin.adminEscolhas.edit', $escolha->id) }}"
+                                                title="Editar"
+                                                class="btn btn-sm btn-outline-primary mb-2 mb-md-0 me-md-2">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                            @endif
+
+                                            @if($todasPermissoes['escolhas']['deletar'] === true)
+                                                <button type="button"
+                                                        class="btn btn-sm btn-outline-danger"
+                                                        title="Excluir"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#deleteEscolha{{ $escolha->id }}">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            @endif
 
                                         </div>
                                     </td>

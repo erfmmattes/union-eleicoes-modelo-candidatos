@@ -12,12 +12,13 @@
         </p>
     </div>
 
-    <!-- Card de Visualização -->
+    <!-- Card -->
     <div class="card shadow-lg border-0 rounded-3 stat-card">
         <div class="card-body p-4">
 
             <!-- Detalhes -->
             <div class="row mb-3">
+
                 <div class="col-md-6 mb-3">
                     <label class="form-label fw-semibold">Nome da Etapa</label>
                     <div class="form-control bg-light">{{ $etapa->nome }}</div>
@@ -43,6 +44,35 @@
                         @endif
                     </div>
                 </div>
+
+                <!-- CAMPO: Múltipla Escolha -->
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-semibold">Múltipla Escolha?</label>
+                    <div>
+                        @if($etapa->multipla_escolha)
+                            <span class="badge bg-primary px-3 py-2">Sim</span>
+                        @else
+                            <span class="badge bg-secondary px-3 py-2">Não</span>
+                        @endif
+                    </div>
+                </div>
+
+                @if($etapa->multipla_escolha)
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">Quantidade Mínima de Escolhas</label>
+                        <div class="form-control bg-light">
+                            {{ $etapa->quantidade_minima_escolhas ?? '-' }}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">Quantidade Máxima de Escolhas</label>
+                        <div class="form-control bg-light">
+                            {{ $etapa->quantidade_maxima_escolhas ?? '-' }}
+                        </div>
+                    </div>
+                @endif
+
             </div>
 
             <hr>
@@ -64,14 +94,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($escolhasRelacionadasEtapas as $etapa)
+                        @forelse($escolhasRelacionadasEtapas as $escolha)
                             <tr>
-                                <td class="fw-semibold text-dark">{{ $etapa->id }}</td>
-                                <td>{{ $etapa->nome }}</td>
-                                <td>{{ $etapa->sequencia }}</td>
+                                <td class="fw-semibold text-dark">{{ $escolha->id }}</td>
+                                <td>{{ $escolha->nome }}</td>
+                                <td>{{ $escolha->sequencia }}</td>
                                 <td>
-                                    <div class="btn cur-n btn-sm toggle-status-btn {{ $etapa->status ? 'btn-success' : 'btn-secondary' }}">
-                                        {{ $etapa->status ? 'Ativo' : 'Inativo' }}
+                                    <div class="btn cur-n btn-sm toggle-status-btn {{ $escolha->status ? 'btn-success' : 'btn-secondary' }}">
+                                        {{ $escolha->status ? 'Ativo' : 'Inativo' }}
                                     </div>
                                 </td>
                             </tr>
@@ -88,11 +118,9 @@
 
             <!-- Botões -->
             <div class="d-flex justify-content-end gap-3 mt-4">
-
                 <a href="{{ route('admin.adminEtapa.index') }}" class="btn bot-cancelar-ele px-4">
                     <i class="fa-solid fa-arrow-left me-1"></i> Voltar
                 </a>
-
             </div>
 
         </div>
@@ -102,16 +130,6 @@
 @endsection
 <!---------------- Início - Estilos CSS -------------------->
 <style>
-    .bot-atualizar {
-        background: linear-gradient(135deg, #183F77, #4A90E2);
-        color: #fff !important;
-    }
-    .bot-atualizar:hover {
-        background: linear-gradient(135deg, #122b55, #3570c2);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        font-weight: 600 !important;
-    }
     .bot-cancelar-ele {
         background: linear-gradient(135deg, #6c757d, #6c757d);
         color: #fff !important;
@@ -122,16 +140,12 @@
         box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         font-weight: 600 !important;
     }
-    .title-center {
-        text-align: center;
-    }
+    .title-center { text-align: center; }
     .title-center h1 {
         font-size: 25px;
         font-weight: 600 !important;
     }
-    .cur-n {
-        cursor: auto !important;
-    }
+    .cur-n { cursor: auto !important; }
     .tbop {
         border: var(--bs-border-width) solid var(--bs-border-color);
         margin: auto !important;

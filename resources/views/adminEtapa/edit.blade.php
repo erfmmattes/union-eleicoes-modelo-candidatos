@@ -12,7 +12,7 @@
         </p>
     </div>
 
-    <!-- Card de Edição -->
+    <!-- Card -->
     <div class="card shadow-lg border-0 rounded-3 stat-card">
         <div class="card-body p-4">
 
@@ -41,50 +41,94 @@
                 @endif
 
                 <!-- Formulário -->
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Nome da Etapa</label>
-                    <input 
-                        type="text" 
-                        name="nome" 
-                        class="form-control" 
-                        value="{{ old('nome', $etapa->nome) }}" 
-                        required>
-                </div>
+                <div class="row">
 
-                <div class="col-md-6 mb-3">
-                    <label class="form-label fw-semibold">Setor</label>
-                    <select name="setores_id" class="form-select" required>
-                        @foreach($listaSetores as $listaSetor)
-                            <option value="{{ $listaSetor->id }}"
-                                {{ old('setores_id', $etapa->setores_id) == $listaSetor->id ? 'selected' : '' }}>
-                                {{ $listaSetor->nome }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">Nome da Etapa</label>
+                        <input 
+                            type="text" 
+                            name="nome" 
+                            class="form-control" 
+                            value="{{ old('nome', $etapa->nome) }}" 
+                            required>
+                    </div>
 
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Sequência</label>
-                    <input 
-                        type="text" 
-                        name="sequencia" 
-                        class="form-control" 
-                        value="{{ old('sequencia', $etapa->sequencia) }}">
-                </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">Setor</label>
+                        <select name="setores_id" class="form-select" required>
+                            <option value="">Selecione...</option>
+                            @foreach($listaSetores as $listaSetor)
+                                <option value="{{ $listaSetor->id }}"
+                                    {{ old('setores_id', $etapa->setores_id) == $listaSetor->id ? 'selected' : '' }}>
+                                    {{ $listaSetor->nome }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
 
-                <div class="form-check form-switch mb-4">
-                    <input 
-                        class="form-check-input c-pointer" 
-                        type="checkbox" 
-                        role="switch" 
-                        name="status" 
-                        id="status" 
-                        value="1" 
-                        {{ old('status', $etapa->status ?? false) ? 'checked' : '' }}
-                    >
-                    <label class="form-check-label fw-semibold c-pointer" for="status">
-                        Ativar etapa
-                    </label>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">Sequência</label>
+                        <input 
+                            type="text" 
+                            name="sequencia" 
+                            class="form-control" 
+                            value="{{ old('sequencia', $etapa->sequencia) }}">
+                    </div>
+
+                    <!-- MULTIPLA ESCOLHA -->
+                    <div class="col-md-6 mt-4">
+                        <div class="form-check form-switch">
+                            <input 
+                                class="form-check-input c-pointer" 
+                                type="checkbox" 
+                                id="multipla_escolha" 
+                                name="multipla_escolha"
+                                value="1"
+                                {{ old('multipla_escolha', $etapa->multipla_escolha) ? 'checked' : '' }}>
+                            <label class="form-check-label fw-semibold c-pointer" for="multipla_escolha">
+                                Esta etapa é de múltipla escolha?
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- CAMPOS MOSTRADOS SOMENTE SE MARCAR MULTIPLA -->
+                    <div id="bloco-multipla" style="display: none;">
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold">Quantidade mínima de escolhas</label>
+                            <input 
+                                type="text" 
+                                name="quantidade_minima_escolhas" 
+                                class="form-control"
+                                value="{{ old('quantidade_minima_escolhas', $etapa->quantidade_minima_escolhas) }}">
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold">Quantidade máxima de escolhas</label>
+                            <input 
+                                type="text" 
+                                name="quantidade_maxima_escolhas" 
+                                class="form-control"
+                                value="{{ old('quantidade_maxima_escolhas', $etapa->quantidade_maxima_escolhas) }}">
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6 mt-4">
+                        <div class="form-check form-switch">
+                            <input 
+                                class="form-check-input c-pointer" 
+                                type="checkbox" 
+                                name="status" 
+                                id="status" 
+                                value="1" 
+                                {{ old('status', $etapa->status) ? 'checked' : '' }}>
+                            <label class="form-check-label fw-semibold c-pointer" for="status">
+                                Ativar etapa
+                            </label>
+                        </div>
+                    </div>
+
                 </div>
 
                 <!-- Botões -->
@@ -98,9 +142,9 @@
                 </div>
 
             </form>
-
         </div>
     </div>
+
 </div>
 @endsection
 <!---------------- Início - Estilos CSS -------------------->
@@ -108,6 +152,7 @@
     .bot-atualizar {
         background: linear-gradient(135deg, #183F77, #4A90E2);
         color: #fff !important;
+        transition: all 0.2s ease;
     }
     .bot-atualizar:hover {
         background: linear-gradient(135deg, #122b55, #3570c2);
@@ -118,6 +163,7 @@
     .bot-cancelar-ele {
         background: linear-gradient(135deg, #6c757d, #6c757d);
         color: #fff !important;
+        transition: all 0.2s ease;
     }
     .bot-cancelar-ele:hover {
         background: linear-gradient(135deg, #5c636a, #5c636a);
@@ -130,3 +176,23 @@
     }
 </style>
 <!---------------- Final - Estilos CSS -------------------->
+<!---------------- Início - Scripts JS -------------------->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const multipla = document.getElementById('multipla_escolha');
+    const bloco = document.getElementById('bloco-multipla');
+
+    function toggleCampos() {
+        if (multipla.checked) {
+            bloco.style.display = 'flex';
+            bloco.classList.add('row');
+        } else {
+            bloco.style.display = 'none';
+        }
+    }
+
+    multipla.addEventListener('change', toggleCampos);
+    toggleCampos(); // Executa ao abrir a página
+});
+</script>
+<!---------------- Final - Scripts JS -------------------->

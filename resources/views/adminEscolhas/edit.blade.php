@@ -6,7 +6,7 @@
 
     <!-- Cabeçalho -->
     <div class="mb-5">
-        <h1 class="h2 fw-bolder text-dark">Editar Escolha: {{ $escolha->titulo }}</h1>
+        <h1 class="h2 fw-bolder text-dark">Editar Escolha: {{ $escolha->nome }}</h1>
         <p class="text-muted mt-1">
             Atualize as informações da escolha selecionada.
         </p>
@@ -42,7 +42,24 @@
                     </div>
                 @endif
 
-                <!-- Formulário -->
+                <!-- 🔵 Campo Branco / Nulo / Abstenção -->
+                <div class="form-check form-switch mb-4">
+                    <input 
+                        type="checkbox" 
+                        class="form-check-input c-pointer"
+                        name="branco_nulo_abstencao"
+                        id="branco_nulo_abstencao"
+                        value="1"
+                        {{ old('branco_nulo_abstencao', $escolha->branco_nulo_abstencao) ? 'checked' : '' }}
+                        onchange="toggleCampos()"
+                    >
+                    <label class="form-check-label fw-semibold c-pointer" for="branco_nulo_abstencao">
+                        É Branco / Nulo / Abstenção?
+                    </label>
+                </div>
+
+
+                <!-- Campos Sempre Visíveis -->
                 <div class="row">
 
                     <div class="col-md-6 mb-3">
@@ -57,22 +74,12 @@
                     </div>
 
                     <div class="col-md-6 mb-3">
-                        <label class="form-label fw-semibold">Cargo</label>
-                        <input 
-                            type="text" 
-                            name="cargo" 
-                            class="form-control"
-                            value="{{ old('cargo', $escolha->cargo) }}"
-                        >
-                    </div>
-
-                    <div class="col-md-6 mb-3">
                         <label class="form-label fw-semibold">Etapa Candidato</label>
                         <select name="etapas_candidatos_id" class="form-select" required">
 
                             @foreach($listaEtapas as $listaEtapa)
                                 <option value="{{ $listaEtapa->id }}"
-                                    {{ old('etapas_candidatos_id', $escolha->etapas_candidatos_id ?? null) == $listaEtapa->id ? 'selected' : '' }}>
+                                    {{ old('etapas_candidatos_id', $escolha->etapas_candidatos_id) == $listaEtapa->id ? 'selected' : '' }}>
                                     {{ $listaEtapa->nome }}
                                 </option>
                             @endforeach
@@ -87,6 +94,22 @@
                             name="sequencia" 
                             class="form-control"
                             value="{{ old('sequencia', $escolha->sequencia) }}"
+                        >
+                    </div>
+
+                </div>
+
+
+                <!-- 🔴 Campos Ocultáveis -->
+                <div id="campos-normais">
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">Cargo</label>
+                        <input 
+                            type="text" 
+                            name="cargo" 
+                            class="form-control"
+                            value="{{ old('cargo', $escolha->cargo) }}"
                         >
                     </div>
 
@@ -111,28 +134,34 @@
                             class="rounded shadow-sm"
                         >
                     </div>
+
                     @if($escolha->tem_foto == 0)
                         <div class="col-md-12 mb-3">
-                            <img src="{{ asset('img/outras/sem-foto.png') }}" style="max-width: 180px;" class="rounded shadow-sm">
+                            <img src="{{ asset('img/outras/sem-foto.png') }}" 
+                                style="max-width: 180px;" 
+                                class="rounded shadow-sm">
                         </div>
                     @endif
 
-                    <div class="form-check form-switch mb-4">
-                        <input 
-                            class="form-check-input c-pointer" 
-                            type="checkbox"
-                            role="switch"
-                            name="status"
-                            id="status"
-                            value="1"
-                            {{ old('status', $escolha->status ?? false) ? 'checked' : '' }}
-                        >
-                        <label class="form-check-label fw-semibold c-pointer" for="status">
-                            Ativar escolha
-                        </label>
-                    </div>
-
                 </div>
+
+
+                <!-- Ativar Escolha -->
+                <div class="form-check form-switch mb-4">
+                    <input 
+                        class="form-check-input c-pointer" 
+                        type="checkbox"
+                        role="switch"
+                        name="status"
+                        id="status"
+                        value="1"
+                        {{ old('status', $escolha->status) ? 'checked' : '' }}
+                    >
+                    <label class="form-check-label fw-semibold c-pointer" for="status">
+                        Ativar escolha
+                    </label>
+                </div>
+
 
                 <!-- Botões -->
                 <div class="d-flex justify-content-end gap-3 mt-4">
@@ -189,7 +218,17 @@ function previewImagem(event) {
     img.style.display = 'block';
 }
 
+function toggleCampos() {
+    const isBrancoNulo = document.getElementById('branco_nulo_abstencao').checked;
+    const blocos = document.getElementById('campos-normais');
+
+    blocos.style.display = isBrancoNulo ? 'none' : 'block';
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+
+    toggleCampos(); // aplica ao carregar
+
     const alerts = document.querySelectorAll('.alert-temporaria');
 
     alerts.forEach(alert => {

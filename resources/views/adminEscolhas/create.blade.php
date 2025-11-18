@@ -41,19 +41,28 @@
                     </div>
                 @endif
 
-                <!-- Formulário -->
+
+                <!-- 🔵 Campo Branco / Nulo / Abstenção -->
+                <div class="form-check form-switch mb-4">
+                    <input type="checkbox"
+                           class="form-check-input c-pointer"
+                           name="branco_nulo_abstencao"
+                           id="branco_nulo_abstencao"
+                           value="1"
+                           onchange="toggleCampos()">
+                    <label class="form-check-label fw-semibold c-pointer" for="branco_nulo_abstencao">
+                        É Branco / Nulo / Abstenção?
+                    </label>
+                </div>
+
+
+                <!-- Campos Sempre Visíveis -->
                 <div class="row">
 
                     <div class="col-md-6 mb-3">
                         <label class="form-label fw-semibold">Nome</label>
                         <input type="text" name="nome" class="form-control"
                                value="{{ old('nome') }}" required>
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-semibold">Cargo</label>
-                        <input type="text" name="cargo" class="form-control"
-                               value="{{ old('cargo') }}" required>
                     </div>
 
                     <div class="col-md-6 mb-3">
@@ -77,6 +86,18 @@
                                value="{{ old('sequencia') }}">
                     </div>
 
+                </div>
+
+
+                <!-- 🔴 Campos que somem quando Branco/Nulo/Abstenção -->
+                <div id="campos-normais">
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">Cargo</label>
+                        <input type="text" name="cargo" class="form-control"
+                               value="{{ old('cargo') }}">
+                    </div>
+
                     <div class="col-md-12 mb-3">
                         <label class="form-label fw-semibold">Foto (opcional)</label>
                         <input type="file" name="foto_upload" class="form-control"
@@ -88,16 +109,19 @@
                              class="rounded shadow-sm">
                     </div>
 
-                    <div class="form-check form-switch mb-4">
-                        <input type="checkbox"
-                               class="form-check-input c-pointer"
-                               name="status" id="status" value="1">
-                        <label class="form-check-label fw-semibold c-pointer" for="status">
-                            Ativar escolha
-                        </label>
-                    </div>
-
                 </div>
+
+
+                <!-- Ativar Escolha -->
+                <div class="form-check form-switch mb-4">
+                    <input type="checkbox"
+                           class="form-check-input c-pointer"
+                           name="status" id="status" value="1">
+                    <label class="form-check-label fw-semibold c-pointer" for="status">
+                        Ativar escolha
+                    </label>
+                </div>
+
 
                 <!-- Botões -->
                 <div class="d-flex justify-content-end gap-3 mt-4">
@@ -156,7 +180,16 @@ function previewImagem(event) {
     img.style.display = 'block';
 }
 
+function toggleCampos() {
+    const isBrancoNulo = document.getElementById('branco_nulo_abstencao').checked;
+    const blocosNormais = document.getElementById('campos-normais');
+
+    blocosNormais.style.display = isBrancoNulo ? 'none' : 'block';
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+    toggleCampos(); // aplica ao carregar
+
     const alerts = document.querySelectorAll('.alert-temporaria');
     alerts.forEach(alert => {
         setTimeout(() => {

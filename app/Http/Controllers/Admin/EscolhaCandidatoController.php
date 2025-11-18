@@ -65,7 +65,7 @@ class EscolhaCandidatoController extends Controller
 
         $listaEtapas = $this->escolhaService->listarTodasEtapas();
 
-        return view('adminEscolhas.create', compact('listaEtapas'));
+        return view('adminEscolhas.create', compact('todasPermissoes','listaEtapas'));
     }
 
     public function store(Request $request)
@@ -100,7 +100,7 @@ class EscolhaCandidatoController extends Controller
 
         $escolha = $this->escolhaService->buscar($id);
 
-        return view('adminEscolhas.show', compact('escolha'));
+        return view('adminEscolhas.show', compact('todasPermissoes','escolha'));
     }
 
     public function edit($id)
@@ -114,7 +114,7 @@ class EscolhaCandidatoController extends Controller
         $escolha = $this->escolhaService->buscar($id);
         $listaEtapas = $this->escolhaService->listarTodasEtapas();
 
-        return view('adminEscolhas.edit', compact('escolha','listaEtapas'));
+        return view('adminEscolhas.edit', compact('todasPermissoes','escolha','listaEtapas'));
     }
 
     public function update(Request $request, $id)
