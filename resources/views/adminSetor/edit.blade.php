@@ -1,14 +1,14 @@
 @extends('layouts.appMasterAdmin')
-@section('title', 'Union Eleições - Editar Etapa')
+@section('title', 'Union Eleições - Editar Setor')
 
 @section('content')
 <div class="container">
 
     <!-- Cabeçalho -->
     <div class="mb-5">
-        <h1 class="h2 fw-bolder text-dark">Editar Etapa: {{ $etapa->nome }}</h1>
+        <h1 class="h2 fw-bolder text-dark">Editar Setor: {{ $setor->nome }}</h1>
         <p class="text-muted mt-1">
-            Atualize as informações da etapa selecionada.
+            Atualize as informações do setor selecionado.
         </p>
     </div>
 
@@ -16,7 +16,7 @@
     <div class="card shadow-lg border-0 rounded-3 stat-card">
         <div class="card-body p-4">
 
-            <form action="{{ route('admin.adminEtapa.update', $etapa->id) }}" method="POST">
+            <form action="{{ route('admin.adminSetor.update', $setor->id) }}" method="POST">
                 @csrf
                 @method('PUT')
 
@@ -42,34 +42,13 @@
 
                 <!-- Formulário -->
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Nome da Etapa</label>
+                    <label class="form-label fw-semibold">Nome do Setor</label>
                     <input 
                         type="text" 
                         name="nome" 
                         class="form-control" 
-                        value="{{ old('nome', $etapa->nome) }}" 
+                        value="{{ old('nome', $setor->nome) }}" 
                         required>
-                </div>
-
-                <div class="col-md-6 mb-3">
-                    <label class="form-label fw-semibold">Setor</label>
-                    <select name="setores_id" class="form-select" required>
-                        @foreach($listaSetores as $listaSetor)
-                            <option value="{{ $listaSetor->id }}"
-                                {{ old('setores_id', $etapa->setores_id) == $listaSetor->id ? 'selected' : '' }}>
-                                {{ $listaSetor->nome }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Sequência</label>
-                    <input 
-                        type="text" 
-                        name="sequencia" 
-                        class="form-control" 
-                        value="{{ old('sequencia', $etapa->sequencia) }}">
                 </div>
 
                 <div class="form-check form-switch mb-4">
@@ -80,18 +59,19 @@
                         name="status" 
                         id="status" 
                         value="1" 
-                        {{ old('status', $etapa->status ?? false) ? 'checked' : '' }}
+                        {{ old('status', $setor->status) ? 'checked' : '' }}
                     >
                     <label class="form-check-label fw-semibold c-pointer" for="status">
-                        Ativar etapa
+                        Ativar setor
                     </label>
                 </div>
 
                 <!-- Botões -->
                 <div class="d-flex justify-content-end gap-3 mt-4">
-                    <a href="{{ route('admin.adminEtapa.index') }}" class="btn bot-cancelar-ele px-4">
+                    <a href="{{ route('admin.adminSetor.index') }}" class="btn bot-cancelar-ele px-4">
                         <i class="fa-solid fa-arrow-left me-1"></i> Cancelar
                     </a>
+
                     <button type="submit" class="btn bot-atualizar px-4">
                         <i class="fa-solid fa-save me-1"></i> Atualizar
                     </button>
@@ -101,6 +81,7 @@
 
         </div>
     </div>
+
 </div>
 @endsection
 <!---------------- Início - Estilos CSS -------------------->
@@ -115,6 +96,7 @@
         box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         font-weight: 600 !important;
     }
+
     .bot-cancelar-ele {
         background: linear-gradient(135deg, #6c757d, #6c757d);
         color: #fff !important;
@@ -125,6 +107,7 @@
         box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         font-weight: 600 !important;
     }
+
     .c-pointer {
         cursor: pointer;
     }

@@ -15,13 +15,13 @@ class EscolhaCandidato extends Model
     // 🧱 Campos que podem ser preenchidos em massa
     protected $fillable = [
         'etapas_candidatos_id',
-        'titulo',
         'nome',
         'cargo',
         'tem_foto',
         'foto',
         'caminho',
         'sequencia',
+        'branco_nulo_abstencao',
         'status',
     ];
 

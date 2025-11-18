@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('escolhas_candidatos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('etapas_candidatos_id')->constrained('etapas_candidatos')->onDelete('cascade');
-            $table->string('titulo')->nullable();
             $table->string('nome')->nullable();
             $table->string('cargo')->nullable();
             $table->boolean('tem_foto')->default(false);
             $table->string('foto')->nullable();
             $table->string('caminho')->nullable();
             $table->string('sequencia')->nullable();
+            $table->boolean('branco_nulo_abstencao')->default(false);
             $table->boolean('status')->default(false);
             $table->timestamps();
         });

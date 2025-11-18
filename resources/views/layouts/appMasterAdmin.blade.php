@@ -239,10 +239,19 @@
                         </ul>
                     </li>
 
+                    <!-- Setores -->
+                     @if ($permissoesService->verificarPermissao('setores', 'ver'))
+                        <li class="nav-item">
+                            <a class="nav-link {{ Str::startsWith(Route::currentRouteName(), 'admin.adminSetor.') ? 'active' : '' }}" href="{{ route('admin.adminSetor.index') }}">
+                                <i class="fas fa-people-group"></i> Setores
+                            </a>
+                        </li>
+                    @endif
+
                     <!-- Candidatos -->
                     <li class="nav-item">
                         @php
-                            $menuAtivo = Str::startsWith(Route::currentRouteName(), ['admin.adminEtapa.']);
+                            $menuAtivo = Str::startsWith(Route::currentRouteName(), ['admin.adminEtapa.', 'admin.adminEscolhas.']);
                         @endphp
 
                         @if ($permissoesService->verificarPermissao('candidatos', 'ver'))
@@ -270,8 +279,8 @@
 
                             @if ($permissoesService->verificarPermissao('escolhas', 'ver'))
                                 <li class="nav-item">
-                                    <a class="nav-link {{ Str::startsWith(Route::currentRouteName(), 'admin.adminDocumentos.') ? 'active' : '' }}" 
-                                    href="{{ route('admin.adminDocumentos.index') }}">
+                                    <a class="nav-link {{ Str::startsWith(Route::currentRouteName(), 'admin.adminEscolhas.') ? 'active' : '' }}" 
+                                    href="{{ route('admin.adminEscolhas.index') }}">
                                         <i class="fa-regular fa-circle-dot"></i> Escolhas
                                     </a>
                                 </li>
@@ -501,22 +510,52 @@
                         </ul>
                     </li>
 
-                    <!-- Perguntas -->
+                    <!-- Setores -->
+                     @if ($permissoesService->verificarPermissao('setores', 'ver'))
+                        <li class="nav-item">
+                            <a class="nav-link {{ Str::startsWith(Route::currentRouteName(), 'admin.adminSetor.') ? 'active' : '' }}" href="{{ route('admin.adminSetor.index') }}">
+                                <i class="fas fa-people-group"></i> Setores
+                            </a>
+                        </li>
+                    @endif
+
+                    <!-- Candidatos -->
                     <li class="nav-item">
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#perguntasMenu" aria-expanded="false">
-                            <i class="fa-solid fa-question"></i> Perguntas <i class="fas fa-chevron-down float-end"></i>
-                        </a>
-                        <ul class="collapse nav flex-column ms-3" id="perguntasMenu" data-bs-parent="#mobileAccordionSidebar">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <i class="fa-solid fa-file"></i> Documentos
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <i class="fa-solid fa-info"></i> Ajuda
-                                </a>
-                            </li>
+                        @php
+                            $menuAtivo = Str::startsWith(Route::currentRouteName(), ['admin.adminEtapa.', 'admin.adminEscolhas.']);
+                        @endphp
+
+                        @if ($permissoesService->verificarPermissao('candidatos', 'ver'))
+                            <a class="nav-link {{ $menuAtivo ? '' : 'collapsed' }}" 
+                                href="#" 
+                                data-bs-toggle="collapse" 
+                                data-bs-target="#candidatosMenu" 
+                                aria-expanded="{{ $menuAtivo ? 'true' : 'false' }}">
+                                    <i class="fa-solid fa-users"></i> Candidatos 
+                                    <i class="fas fa-chevron-down float-end"></i>
+                            </a>
+                        @endif
+
+                        <ul class="collapse nav flex-column ms-3 {{ $menuAtivo ? 'show' : '' }}" 
+                            id="candidatosMenu" 
+                            data-bs-parent="#accordionSidebar">
+
+                            @if ($permissoesService->verificarPermissao('etapas', 'ver'))
+                                <li class="nav-item">
+                                    <a class="nav-link {{ Str::startsWith(Route::currentRouteName(), 'admin.adminEtapa.') ? 'active' : '' }}" href="{{ route('admin.adminEtapa.index') }}">
+                                        <i class="fa-solid fa-list-ol"></i> Etapas
+                                    </a>
+                                </li>
+                            @endif
+
+                            @if ($permissoesService->verificarPermissao('escolhas', 'ver'))
+                                <li class="nav-item">
+                                    <a class="nav-link {{ Str::startsWith(Route::currentRouteName(), 'admin.adminEscolhas.') ? 'active' : '' }}" 
+                                    href="{{ route('admin.adminEscolhas.index') }}">
+                                        <i class="fa-regular fa-circle-dot"></i> Escolhas
+                                    </a>
+                                </li>
+                            @endif
                         </ul>
                     </li>
 

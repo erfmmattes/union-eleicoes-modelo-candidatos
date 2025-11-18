@@ -39,6 +39,16 @@ class EtapaCandidatoService
         }
     }
 
+    public function buscarEtapasRelacionadas($id)
+    {
+        try {
+            return $this->etapaCandidatoRepository->etapasRelacionadas($id);
+        } catch (Exception $e) {
+            $this->logRepository->criarLog('erro - buscarEtapasRelacionadas - EtapaCandidatoService', $e);
+            return null;
+        }
+    }
+
     public function criar(array $data)
     {
         try {
@@ -47,6 +57,11 @@ class EtapaCandidatoService
             $this->logRepository->criarLog('erro - criar - EtapaCandidatoService', $e);
             return null;
         }
+    }
+
+    public function listarTodosSetores()
+    {
+        return $this->etapaCandidatoRepository->setoresAll();
     }
 
     public function atualizar($id, array $data)
@@ -62,7 +77,17 @@ class EtapaCandidatoService
     public function deletar($id)
     {
         try {
-            return $this->etapaCandidatoRepository->delete($id);
+            $resultado = $this->etapaCandidatoRepository->delete($id);
+
+            if (!$resultado) {
+                return [
+                    'deleted' => false,
+                    'reason' => 'possui_escolhas'
+                ];
+            }
+
+            return ['deleted' => true];
+
         } catch (Exception $e) {
             $this->logRepository->criarLog('erro - deletar - EtapaCandidatoService', $e);
             return null;
@@ -73,12 +98,30 @@ class EtapaCandidatoService
     {
         try {
             $etapa = $this->buscar($id);
+            if ($etapa->escolhas()->exists()) {
+                return [
+                    'allowed' => false,
+                    'etapa' => $etapa
+                ];
+            }
             $etapa->status = !$etapa->status;
             $etapa->save();
-            return $etapa;
+
+            return [
+                'allowed' => true,
+                'etapa' => $etapa
+            ];
+
         } catch (Exception $e) {
-            $this->logRepository->criarLog('erro - toggleStatus - EtapaCandidatoService', $e);
-            return null;
+            $this->logRepository->criarLog(
+                'erro - toggleStatus - EtapaCandidatoService',
+                $e->getMessage()
+            );
+
+            return [
+                'allowed' => false,
+                'error' => true
+            ];
         }
     }
 }

@@ -16,7 +16,9 @@ use App\Http\Controllers\Admin\DeclaracaoEleicaoController;
 use App\Http\Controllers\Admin\EleitoresAdminController;
 use App\Http\Controllers\Admin\DocumentosAdminController;
 use App\Http\Controllers\Admin\AjudaAdminController;
+use App\Http\Controllers\Admin\SetoresAdminController;
 use App\Http\Controllers\Admin\EtapaCandidatoController;
+use App\Http\Controllers\Admin\EscolhaCandidatoController;
 use App\Http\Controllers\Admin\DadosEleicaoController;
 use App\Http\Controllers\Admin\EleitorLogadoController;
 use App\Http\Controllers\Admin\ListaEleitoresController;
@@ -173,15 +175,35 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::delete('/ajuda/{id}', [AjudaAdminController::class, 'destroy'])->name('adminAjuda.destroy');
     Route::post('/ajuda/{id}/status', [AjudaAdminController::class, 'status'])->name('adminAjuda.status');
 
+    // Setores do Admin
+    Route::get('/setores', [SetoresAdminController::class, 'index'])->name('adminSetor.index');
+    Route::get('/setores/criar', [SetoresAdminController::class, 'create'])->name('adminSetor.create');
+    Route::post('/setores', [SetoresAdminController::class, 'store'])->name('adminSetor.store');
+    Route::get('/setores/{id}/editar', [SetoresAdminController::class, 'edit'])->name('adminSetor.edit');
+    Route::put('/setores/{id}', [SetoresAdminController::class, 'update'])->name('adminSetor.update');
+    Route::get('/setores/{id}', [SetoresAdminController::class, 'show'])->name('adminSetor.show');
+    Route::delete('/setores/{id}', [SetoresAdminController::class, 'destroy'])->name('adminSetor.destroy');
+    Route::post('/setores/{id}/status', [SetoresAdminController::class, 'toggleStatus'])->name('adminSetor.status');
+
     // Etapas do Admin
-    Route::get('/etapa', [EtapaCandidatoController::class, 'index'])->name('adminEtapa.index');
-    Route::get('/etapa/create', [EtapaCandidatoController::class, 'create'])->name('adminEtapa.create');
-    Route::post('/etapa', [EtapaCandidatoController::class, 'store'])->name('adminEtapa.store');
-    Route::get('/etapa/{id}', [EtapaCandidatoController::class, 'show'])->name('adminEtapa.show');
-    Route::get('/etapa/{id}/edit', [EtapaCandidatoController::class, 'edit'])->name('adminEtapa.edit');
-    Route::put('/etapa/{id}', [EtapaCandidatoController::class, 'update'])->name('adminEtapa.update');
-    Route::delete('/etapa/{id}', [EtapaCandidatoController::class, 'destroy'])->name('adminEtapa.destroy');
+    Route::get('/etapas', [EtapaCandidatoController::class, 'index'])->name('adminEtapa.index');
+    Route::get('/etapas/create', [EtapaCandidatoController::class, 'create'])->name('adminEtapa.create');
+    Route::post('/etapas', [EtapaCandidatoController::class, 'store'])->name('adminEtapa.store');
+    Route::get('/etapas/{id}', [EtapaCandidatoController::class, 'show'])->name('adminEtapa.show');
+    Route::get('/etapas/{id}/edit', [EtapaCandidatoController::class, 'edit'])->name('adminEtapa.edit');
+    Route::put('/etapas/{id}', [EtapaCandidatoController::class, 'update'])->name('adminEtapa.update');
+    Route::delete('/etapas/{id}', [EtapaCandidatoController::class, 'destroy'])->name('adminEtapa.destroy');
     Route::post('etapas/{id}/status', [EtapaCandidatoController::class, 'toggleStatus'])->name('adminEtapa.status');
+
+    // Escolhas do Admin
+    Route::get('/escolhas', [EscolhaCandidatoController::class, 'index'])->name('adminEscolhas.index');
+    Route::get('/escolhas/create', [EscolhaCandidatoController::class, 'create'])->name('adminEscolhas.create');
+    Route::post('/escolhas', [EscolhaCandidatoController::class, 'store'])->name('adminEscolhas.store');
+    Route::get('/escolhas/{id}', [EscolhaCandidatoController::class, 'show'])->name('adminEscolhas.show');
+    Route::get('/escolhas/{id}/edit', [EscolhaCandidatoController::class, 'edit'])->name('adminEscolhas.edit');
+    Route::put('/escolhas/{id}', [EscolhaCandidatoController::class, 'update'])->name('adminEscolhas.update');
+    Route::delete('/escolhas/{id}', [EscolhaCandidatoController::class, 'destroy'])->name('adminEscolhas.destroy');
+    Route::post('escolhas/{id}/status', [EscolhaCandidatoController::class, 'toggleStatus'])->name('adminEscolhas.status');
 
     // Dados da Eleição do Admin
     Route::get('/dados-eleicao', [DadosEleicaoController::class, 'index'])->name('adminDadosEleicao.index');

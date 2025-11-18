@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('etapas_candidatos', function (Blueprint $table) {
+        Schema::create('setores', function (Blueprint $table) {
             $table->id();
             $table->string('nome')->nullable();
-            $table->string('sequencia')->nullable();
             $table->boolean('status')->default(false);
             $table->timestamps();
         });
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('etapas_candidatos');
+        Schema::dropIfExists('setores');
     }
 };

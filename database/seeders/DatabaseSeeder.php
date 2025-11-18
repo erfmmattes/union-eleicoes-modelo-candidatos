@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DadosEleicaoStatusSeeder::class);
         $this->call(TelaSeeder::class);
         $this->call(TipoUsuarioSeeder::class);
+        $this->call(SetoresSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(UsuarioTelaSeeder::class);
     }

@@ -40,37 +40,96 @@
                 @endif
 
                 <!-- Formulário -->
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Nome da Etapa</label>
-                    <input 
-                        type="text" 
-                        name="nome" 
-                        class="form-control" 
-                        value="{{ old('nome') }}" 
-                        required>
-                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">Nome da Etapa</label>
+                        <input 
+                            type="text" 
+                            name="nome" 
+                            class="form-control" 
+                            value="{{ old('nome') }}" 
+                            required>
+                    </div>
 
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Sequência</label>
-                    <input 
-                        type="text" 
-                        name="sequencia" 
-                        class="form-control" 
-                        value="{{ old('sequencia') }}">
-                </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">Setor</label>
+                        <select name="setores_id" class="form-select" required>
+                            <option value="">Selecione...</option>
 
-                <div class="form-check form-switch mb-4">
-                    <input 
-                        class="form-check-input c-pointer" 
-                        type="checkbox" 
-                        role="switch" 
-                        name="status" 
-                        id="status" 
-                        value="1" 
-                    >
-                    <label class="form-check-label fw-semibold c-pointer" for="status">
-                        Ativar etapa
-                    </label>
+                            @foreach($listaSetores as $listaSetor)
+                                <option value="{{ $listaSetor->id }}"
+                                    {{ old('nome') == $listaSetor->nome ? 'selected' : '' }}>
+                                    {{ $listaSetor->nome }}
+                                </option>
+                            @endforeach
+
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">Sequência</label>
+                        <input 
+                            type="text" 
+                            name="sequencia" 
+                            class="form-control" 
+                            value="{{ old('sequencia') }}">
+                    </div>
+
+                    <div class="col-md-6 mt-4">
+                        <div class="form-check form-switch mb-4">
+                            <input 
+                                class="form-check-input c-pointer" 
+                                type="checkbox" 
+                                role="switch" 
+                                id="multipla_escolha" 
+                                name="multipla_escolha"
+                                value="1"
+                                {{ old('multipla_escolha') ? 'checked' : '' }}>
+                            <label class="form-check-label fw-semibold c-pointer" for="multipla_escolha">
+                                Esta etapa é de múltipla escolha?
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- CAMPOS QUE APARECEM SOMENTE SE MARCAR MULTIPLA ESCOLHA -->
+                    <div id="bloco-multipla" style="display: none;">
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold">Quantidade mínima de escolhas</label>
+                            <input 
+                                type="text" 
+                                name="quantidade_minima_escolhas" 
+                                class="form-control"
+                                value="{{ old('quantidade_minima_escolhas') }}">
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold">Quantidade máxima de escolhas</label>
+                            <input 
+                                type="text" 
+                                name="quantidade_maxima_escolhas" 
+                                class="form-control"
+                                value="{{ old('quantidade_maxima_escolhas') }}">
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6 mt-4">
+                        <div class="form-check form-switch mb-4">
+                            <input 
+                                class="form-check-input c-pointer" 
+                                type="checkbox" 
+                                role="switch" 
+                                name="status" 
+                                id="status" 
+                                value="1" 
+                            >
+                            <label class="form-check-label fw-semibold c-pointer" for="status">
+                                Ativar etapa
+                            </label>
+                        </div>
+                    </div>
+
                 </div>
 
                 <!-- Botões -->
@@ -131,6 +190,27 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => alert.remove(), 500);
         }, 5000);
     });
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const multipla = document.getElementById('multipla_escolha');
+    const bloco = document.getElementById('bloco-multipla');
+
+    function toggleCampos() {
+        if (multipla.checked) {
+            bloco.style.display = 'flex';
+            bloco.classList.add('row');
+        } else {
+            bloco.style.display = 'none';
+            bloco.querySelectorAll('input').forEach(input => input.value = '');
+        }
+    }
+
+    multipla.addEventListener('change', toggleCampos);
+
+    // Executa ao carregar (para old() em caso de erro)
+    toggleCampos();
 });
 </script>
 <!---------------- Final - Scripts JS -------------------->

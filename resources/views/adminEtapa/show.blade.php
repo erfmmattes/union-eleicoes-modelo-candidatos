@@ -24,20 +24,66 @@
                 </div>
 
                 <div class="col-md-6 mb-3">
+                    <label class="form-label fw-semibold">Setor</label>
+                    <div class="form-control bg-light">{{ $etapa->setor->nome }}</div>
+                </div>
+
+                <div class="col-md-6 mb-3">
                     <label class="form-label fw-semibold">Sequência</label>
                     <div class="form-control bg-light">{{ $etapa->sequencia }}</div>
                 </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-semibold">Status</label>
+                    <div>
+                        @if($etapa->status)
+                            <span class="badge bg-success px-3 py-2">Ativa</span>
+                        @else
+                            <span class="badge bg-secondary px-3 py-2">Inativa</span>
+                        @endif
+                    </div>
+                </div>
             </div>
 
-            <div class="mb-4">
-                <label class="form-label fw-semibold">Status</label>
-                <div>
-                    @if($etapa->status)
-                        <span class="badge bg-success px-3 py-2">Ativa</span>
-                    @else
-                        <span class="badge bg-secondary px-3 py-2">Inativa</span>
-                    @endif
-                </div>
+            <hr>
+
+            <div class="title-center mt-2">
+                <h1>Escolhas Relacionadas</h1>
+            </div>
+
+            <hr>
+
+            <div class="table-responsive tbop mt-4">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light bod-tabled">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Sequência</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($escolhasRelacionadasEtapas as $etapa)
+                            <tr>
+                                <td class="fw-semibold text-dark">{{ $etapa->id }}</td>
+                                <td>{{ $etapa->nome }}</td>
+                                <td>{{ $etapa->sequencia }}</td>
+                                <td>
+                                    <div class="btn cur-n btn-sm toggle-status-btn {{ $etapa->status ? 'btn-success' : 'btn-secondary' }}">
+                                        {{ $etapa->status ? 'Ativo' : 'Inativo' }}
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-4">
+                                    Nenhuma etapa encontrada.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
 
             <!-- Botões -->
@@ -75,6 +121,21 @@
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         font-weight: 600 !important;
+    }
+    .title-center {
+        text-align: center;
+    }
+    .title-center h1 {
+        font-size: 25px;
+        font-weight: 600 !important;
+    }
+    .cur-n {
+        cursor: auto !important;
+    }
+    .tbop {
+        border: var(--bs-border-width) solid var(--bs-border-color);
+        margin: auto !important;
+        width: 85% !important;
     }
 </style>
 <!---------------- Final - Estilos CSS -------------------->

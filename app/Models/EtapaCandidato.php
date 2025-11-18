@@ -13,6 +13,10 @@ class EtapaCandidato extends Model
 
     protected $fillable = [
         'nome',
+        'setores_id',
+        'multipla_escolha',
+        'quantidade_minima_escolhas',
+        'quantidade_maxima_escolhas',
         'sequencia',
         'status',
     ];
@@ -30,5 +34,10 @@ class EtapaCandidato extends Model
     public function escolhas()
     {
         return $this->hasMany(EscolhaCandidato::class, 'etapas_candidatos_id', 'id');
+    }
+
+    public function setor()
+    {
+        return $this->belongsTo(Setor::class, 'setores_id');
     }
 }

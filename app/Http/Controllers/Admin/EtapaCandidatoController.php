@@ -9,12 +9,6 @@ use Illuminate\Http\Request;
 
 class EtapaCandidatoController extends Controller
 {
-    // protected EtapaCandidatoService $etapaCandidatoService;
-
-    // public function __construct(EtapaCandidatoService $etapaCandidatoService)
-    // {
-    //     $this->etapaCandidatoService = $etapaCandidatoService;
-    // }
     protected EtapaCandidatoService $etapaCandidatoService;
     protected ListaUsuarioTelaPermissaoService $permissaoService;
 
@@ -56,17 +50,24 @@ class EtapaCandidatoController extends Controller
         if (empty($todasPermissoes['etapas']['criar'] ?? false)) {
             abort(403, 'Você não tem permissão para visualizar esta página.');
         }
-        return view('adminEtapa.create');
+        $listaSetores = $this->etapaCandidatoService->listarTodosSetores();
+
+        return view('adminEtapa.create', compact('listaSetores'));
     }
 
     public function store(Request $request)
     {
         $data = $request->validate([
             'nome' => 'required|string|max:255',
+            'setores_id' => 'nullable|string|max:255',
+            'multipla_escolha' => 'nullable|boolean',
+            'quantidade_minima_escolhas' => 'nullable|string|max:255',
+            'quantidade_maxima_escolhas' => 'nullable|string|max:255',
             'sequencia' => 'nullable|string|max:20',
             'status' => 'nullable|boolean',
         ]);
 
+        $data['multipla_escolha'] = $request->has('multipla_escolha') ? 1 : 0;
         $data['status'] = $request->has('status') ? 1 : 0;
 
         $this->etapaCandidatoService->criar($data);
@@ -81,7 +82,8 @@ class EtapaCandidatoController extends Controller
             abort(403, 'Você não tem permissão para visualizar esta página.');
         }
         $etapa = $this->etapaCandidatoService->buscar($id);
-        return view('adminEtapa.show', compact('etapa'));
+        $escolhasRelacionadasEtapas = $this->etapaCandidatoService->buscarEtapasRelacionadas($id);
+        return view('adminEtapa.show', compact('etapa','escolhasRelacionadasEtapas'));
     }
 
     public function edit($id)
@@ -91,17 +93,23 @@ class EtapaCandidatoController extends Controller
             abort(403, 'Você não tem permissão para visualizar esta página.');
         }
         $etapa = $this->etapaCandidatoService->buscar($id);
-        return view('adminEtapa.edit', compact('etapa'));
+        $listaSetores = $this->etapaCandidatoService->listarTodosSetores();
+        return view('adminEtapa.edit', compact('etapa','listaSetores'));
     }
 
     public function update(Request $request, $id)
     {
         $data = $request->validate([
             'nome' => 'required|string|max:255',
+            'setores_id' => 'nullable|string|max:255',
+            'multipla_escolha' => 'nullable|boolean',
+            'quantidade_minima_escolhas' => 'nullable|string|max:255',
+            'quantidade_maxima_escolhas' => 'nullable|string|max:255',
             'sequencia' => 'nullable|string|max:20',
             'status' => 'nullable|boolean',
         ]);
 
+        $data['multipla_escolha'] = $request->has('multipla_escolha') ? 1 : 0;
         $data['status'] = $request->has('status') ? 1 : 0;
 
         $this->etapaCandidatoService->atualizar($id, $data);
@@ -115,17 +123,53 @@ class EtapaCandidatoController extends Controller
         if (empty($todasPermissoes['etapas']['deletar'] ?? false)) {
             abort(403, 'Você não tem permissão para visualizar esta página.');
         }
-        $this->etapaCandidatoService->deletar($id);
+        $resultado = $this->etapaCandidatoService->deletar($id);
+        if (!$resultado['deleted']) {
+            return redirect()->back()->with('error', 'Não é possível deletar esta etapa pois existem escolhas relacionadas.');
+        }
         return redirect()->route('admin.adminEtapa.index')->with('success', 'Etapa removida com sucesso!');
     }
 
     public function toggleStatus($id)
     {
-        try {
-            $etapa = $this->etapaCandidatoService->toggleStatus($id);
-            return response()->json(['success' => true, 'status' => (bool)$etapa->status]);
-        } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        $retorno = $this->etapaCandidatoService->toggleStatus($id);
+        if (!$retorno['allowed'] && empty($retorno['error'])) {
+
+            if (request()->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Não é possível alterar o status. Esta etapa possui escolhas vinculadas.'
+                ], 400);
+            }
+
+            return redirect()
+                ->route('admin.adminEtapa.index')
+                ->with('error', 'Não é possível alterar o status. Esta etapa possui escolhas vinculadas.');
         }
+
+        if (!empty($retorno['error'])) {
+
+            if (request()->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Erro ao tentar atualizar o status. Tente novamente.'
+                ], 500);
+            }
+
+            return redirect()
+                ->route('admin.adminEtapa.index')
+                ->with('error', 'Erro ao tentar atualizar o status. Tente novamente.');
+        }
+
+        if (request()->ajax()) {
+            return response()->json([
+                'success' => true,
+                'status' => (bool)$retorno['etapa']->status
+            ]);
+        }
+
+        return redirect()
+            ->route('admin.adminEtapa.index')
+            ->with('success', 'Status atualizado com sucesso!');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Repositories\Admin;
 
 use App\Models\EtapaCandidato;
+use App\Models\Setor;
 use Illuminate\Database\Eloquent\Collection;
 
 class EtapaCandidatoRepository
@@ -24,9 +25,22 @@ class EtapaCandidatoRepository
         return $this->model->orderBy('sequencia')->get();
     }
 
+    public function setoresAll()
+    {
+        return Setor::where('status', '=', '1')->orderBy('nome', 'asc')->get();
+    }
+
     public function find(int $id): EtapaCandidato
     {
         return $this->model->findOrFail($id);
+    }
+
+    public function etapasRelacionadas(int $id)
+    {
+        return $this->model
+        ->with('escolhas')
+        ->where('id', $id)
+        ->get();
     }
 
     public function create(array $data): EtapaCandidato
@@ -44,6 +58,10 @@ class EtapaCandidatoRepository
     public function delete(int $id): bool
     {
         $etapa = $this->find($id);
+        if ($etapa->escolhas()->exists()) {
+            return false;
+        }
+
         return $etapa->delete();
     }
 }

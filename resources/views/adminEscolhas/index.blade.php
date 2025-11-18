@@ -1,5 +1,5 @@
 @extends('layouts.appMasterAdmin')
-@section('title', 'Union Eleições - Etapas de Candidatos')
+@section('title', 'Union Eleições - Escolhas')
 
 @section('content')
 <div class="container">
@@ -7,19 +7,19 @@
 
         <!-- Cabeçalho -->
         <div class="mb-5">
-            <h1 class="h2 fw-bolder text-dark">Gerenciamento de Etapas de Candidatos</h1>
+            <h1 class="h2 fw-bolder text-dark">Gerenciamento de Escolhas</h1>
             <p class="text-muted mt-1">
-                Crie, organize e controle as etapas de escolha dos candidatos.
+                Crie, organize e controle as escolhas que aparecerão para os eleitores na votação.
             </p>
         </div>
 
         <!-- Filtro / Busca -->
         <div class="card shadow-lg border-0 rounded-3 stat-card mb-4 px-4 py-3">
-            <form action="{{ route('admin.adminEtapa.index') }}" method="GET" class="row g-2 align-items-center form-o">
+            <form action="{{ route('admin.adminEscolhas.index') }}" method="GET" class="row g-2 align-items-center form-o">
 
                 <div class="col-md-6">
-                    <input type="text" name="q" value="{{ request('q') }}" 
-                           class="form-control tam-in" placeholder="Pesquisar por nome da etapa">
+                    <input type="text" name="q" value="{{ request('q') }}"
+                           class="form-control tam-in" placeholder="Pesquisar por nome, título ou cargo">
                 </div>
 
                 <div class="col-md-2">
@@ -35,13 +35,11 @@
                         <i class="fas fa-search"></i>
                     </button>
 
-                    @if($todasPermissoes['etapas']['criar'] === true)
-                        <a href="{{ route('admin.adminEtapa.create') }}" 
-                        title="Criar" 
-                        class="btn botao-buscar w-100">
-                            <i class="fas fa-plus"></i>
-                        </a>
-                    @endif
+                    <a href="{{ route('admin.adminEscolhas.create') }}"
+                       title="Criar"
+                       class="btn botao-buscar w-100">
+                        <i class="fas fa-plus"></i>
+                    </a>
                 </div>
             </form>
         </div>
@@ -50,6 +48,7 @@
         <div class="card shadow-lg border-0 rounded-3 stat-card">
             <div class="card-body p-3 p-md-5">
 
+                <!-- Sucesso -->
                 @if(session('success'))
                     <div class="alert alert-success alert-dismissible fade show alert-temporaria" role="alert">
                         {{ session('success') }}
@@ -65,84 +64,81 @@
                     </div>
                 @endif
 
-                <div class="mensagens-retorno"></div>
-
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">
                         <thead class="table-light bod-tabled">
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
-                                <th>Setor</th>
+                                <th>Cargo</th>
+                                <th>Etapa</th>
                                 <th>Sequência</th>
-                                @if($todasPermissoes['etapas']['editar'] === true)
-                                    <th>Status</th>
-                                @endif
+                                <th>Status</th>
+                                <th>Foto</th>
                                 <th class="text-center">Ações</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @forelse($etapas as $etapa)
-                                <tr>
-                                    <td class="fw-semibold text-dark">{{ $etapa->id }}</td>
-                                    <td>{{ \Illuminate\Support\Str::limit($etapa->nome, 40) }}</td>
-                                    <td>{{ $etapa->setor->nome }}</td>
-                                    <td>{{ $etapa->sequencia }}</td>
 
-                                    @if($todasPermissoes['etapas']['editar'] === true)
-                                        <td>
-                                            <button class="btn btn-sm toggle-status-btn {{ $etapa->status ? 'btn-success' : 'btn-secondary' }}"
-                                                    data-id="{{ $etapa->id }}">
-                                                {{ $etapa->status ? 'Ativo' : 'Inativo' }}
-                                            </button>
-                                        </td>
-                                    @endif
+                        <tbody>
+                            @forelse($escolhas as $escolha)
+                                <tr>
+                                    <td class="fw-semibold text-dark">{{ $escolha->id }}</td>
+                                    <td>{{ \Illuminate\Support\Str::limit($escolha->nome, 40) }}</td>
+                                    <td>{{ $escolha->cargo }}</td>
+                                    <td>{{ $escolha->etapa->nome }}</td>
+                                    <td>{{ $escolha->sequencia }}</td>
+
+                                    <td>
+                                        <button class="btn btn-sm toggle-status-btn {{ $escolha->status ? 'btn-success' : 'btn-secondary' }}"
+                                                data-id="{{ $escolha->id }}">
+                                            {{ $escolha->status ? 'Ativo' : 'Inativo' }}
+                                        </button>
+                                    </td>
+
+                                    <td>
+                                        @if($escolha->tem_foto)
+                                            <img src="{{ asset('storage/'.$escolha->caminho) }}" width="45" class="rounded shadow-sm" alt="{{ $escolha->nome }}" title="{{ $escolha->nome }}">
+                                        @else
+                                            <img src="{{ asset('img/outras/sem-foto.png') }}" width="45" class="rounded shadow-sm" alt="Sem Foto" title="Sem Foto">
+                                        @endif
+                                    </td>
 
                                     <td class="text-center">
                                         <div class="d-flex justify-content-center align-items-center flex-column flex-md-row">
 
-                                            @if($todasPermissoes['etapas']['ver'] === true)
-                                                <a href="{{ route('admin.adminEtapa.show', $etapa->id) }}" title="Ver" class="btn btn-sm btn-outline-primary mb-2 mb-md-0 me-md-2">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                            @endif
+                                            <a href="{{ route('admin.adminEscolhas.edit', $escolha->id) }}"
+                                               title="Editar"
+                                               class="btn btn-sm btn-outline-primary mb-2 mb-md-0 me-md-2">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
 
-                                            @if($todasPermissoes['etapas']['editar'] === true)
-                                                <a href="{{ route('admin.adminEtapa.edit', $etapa->id) }}" 
-                                                title="Editar" 
-                                                class="btn btn-sm btn-outline-primary mb-2 mb-md-0 me-md-2">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                            @endif
-
-                                            @if($todasPermissoes['etapas']['deletar'] === true)
-                                                <button type="button" 
-                                                        class="btn btn-sm btn-outline-danger" 
-                                                        title="Excluir" 
-                                                        data-bs-toggle="modal" 
-                                                        data-bs-target="#deleteEtapa{{ $etapa->id }}">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            @endif
+                                            <button type="button"
+                                                    class="btn btn-sm btn-outline-danger"
+                                                    title="Excluir"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#deleteEscolha{{ $escolha->id }}">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
 
                                         </div>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7" class="text-center text-muted py-4">
-                                        Nenhuma etapa encontrada.
+                                    <td colspan="8" class="text-center text-muted py-4">
+                                        Nenhuma escolha encontrada.
                                     </td>
                                 </tr>
                             @endforelse
                         </tbody>
+
                     </table>
                 </div>
 
-                {{-- Paginação (se existir) --}}
-                @if(method_exists($etapas, 'links'))
+                <!-- Paginação -->
+                @if(method_exists($escolhas, 'links'))
                     <div class="mt-4 custom-pagination-wrapper">
-                        {{ $etapas->links('pagination::bootstrap-5') }}
+                        {{ $escolhas->links('pagination::bootstrap-5') }}
                     </div>
                 @endif
 
@@ -151,9 +147,9 @@
     </div>
 </div>
 
-<!-- Modais de Exclusão -->
-@foreach ($etapas as $etapa)
-    <div class="modal fade" id="deleteEtapa{{ $etapa->id }}" tabindex="-1">
+<!-- Modais de exclusão -->
+@foreach ($escolhas as $escolha)
+    <div class="modal fade" id="deleteEscolha{{ $escolha->id }}" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow-lg rounded-3">
                 <div class="modal-header bg-danger text-white">
@@ -161,11 +157,15 @@
                 </div>
                 <div class="modal-body text-center">
                     <i class="fas fa-exclamation-triangle fa-3x text-danger mb-3"></i>
-                    <p class="fs-6">Deseja realmente excluir a etapa <strong>{{ $etapa->nome }}</strong>?</p>
+                    <p class="fs-6">
+                        Deseja realmente excluir a escolha
+                        <strong>{{ $escolha->titulo ?? $escolha->nome ?? 'Sem nome' }}</strong>?
+                    </p>
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
                     <button type="button" class="btn bot-cancela px-4" data-bs-dismiss="modal">Cancelar</button>
-                    <form action="{{ route('admin.adminEtapa.destroy', $etapa->id) }}" method="POST">
+
+                    <form action="{{ route('admin.adminEscolhas.destroy', $escolha->id) }}" method="POST">
                         @csrf @method('DELETE')
                         <button type="submit" class="btn botao-confirmar px-4">Sim, Excluir</button>
                     </form>
@@ -175,16 +175,17 @@
     </div>
 @endforeach
 @endsection
-<!---------------- Início - Estillos CSS -------------------->
+<!---------------- Início - Estilos CSS -------------------->
 <style>
 .form-o { margin: 0; }
 .tam-in { height: 50px; }
+
 .botao-buscar {
     background: linear-gradient(135deg, #183F77, #4A90E2);
     color: #fff !important;
     height: 50px;
-    display: flex !important;          
-    align-items: center !important;   
+    display: flex !important;
+    align-items: center !important;
     justify-content: center !important;
 }
 .botao-buscar:hover {
@@ -193,17 +194,7 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     font-weight: 600 !important;
 }
-.botao-criar {
-    background-color: #00B070;
-    color: #fff !important;
-    padding-top: 15px !important;
-}
-.botao-criar:hover {
-    background-color: #00B070;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    font-weight: 600 !important;
-}
+
 .botao-confirmar {
     background-color: #dc3545 !important;
     color: #fff !important;
@@ -212,8 +203,8 @@
     background: linear-gradient(135deg, #dc3545) !important;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    font-weight: 600 !important;
 }
+
 .bot-cancela {
     background: linear-gradient(135deg, #6c757d, #6c757d);
     color: #fff !important;
@@ -222,9 +213,8 @@
     background: linear-gradient(135deg, #6c757d, #6c757d);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    font-weight: 600 !important;
-
 }
+
 .custom-pagination-wrapper .pagination {
     justify-content: center !important;
     margin-top: 1.5rem !important;
@@ -238,83 +228,50 @@
     padding: 8px 12px !important;
     margin: 0 6px !important;
     background-color: #f8f9fa !important;
-    transition: transform .12s ease, box-shadow .12s ease !important;
-    box-shadow: none !important;
 }
 .custom-pagination-wrapper .page-item.active .page-link {
     background: linear-gradient(135deg, #183F77, #4A90E2) !important;
     color: #fff !important;
-    border: none !important;
-    box-shadow: 0 6px 18px rgba(74,144,226,0.12) !important;
 }
 .custom-pagination-wrapper .page-item:hover .page-link {
     transform: translateY(-3px) !important;
     background-color: #e9f0fb !important;
     color: #122b55 !important;
 }
-.custom-pagination-wrapper .page-item.disabled .page-link,
-.custom-pagination-wrapper .page-item.disabled .page-link:hover {
-    color: #adb5bd !important;
-    background-color: transparent !important;
-    transform: none !important;
-    pointer-events: none !important;
-}
-.custom-pagination-wrapper .page-link:focus {
-    box-shadow: none !important;
-    outline: none !important;
-}
 </style>
-<!---------------- Final - Estillos CSS -------------------->
-<!---------------- Início - Scripts JavaScript e Jquery ------------------ -->
+<!---------------- Final - Estilos CSS -------------------->
+<!---------------- Início - Scripts JavaScript -------------------->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const alerts = document.querySelectorAll('.alert-temporaria');
-    alerts.forEach(alert => {
+    document.querySelectorAll('.alert-temporaria').forEach(alert => {
         setTimeout(() => {
-            alert.style.transition = 'opacity 0.5s';
-            alert.style.opacity = '0';
+            alert.style.transition = 'opacity .5s';
+            alert.style.opacity = 0;
             setTimeout(() => alert.remove(), 500);
         }, 5000);
     });
 });
 </script>
-<script>
-function mostrarAlertaErro(msg) {
-    const container = document.querySelector('.mensagens-retorno');
 
-    const alerta = document.createElement('div');
-    alerta.className = "alert alert-danger alert-dismissible fade show alert-temporaria";
-    alerta.role = "alert";
-    alerta.innerHTML = `
-        ${msg}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
-    `;
-
-    container.appendChild(alerta);
-
-    setTimeout(() => alerta.remove(), 5000);
-}
-</script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const urlTemplate = "{{ route('admin.adminEtapa.status', ['id' => 'ID_ETAPA']) }}";
-
+    const urlTemplate = "{{ route('admin.adminEscolhas.status', ['id' => 'ID_ESCOLHA']) }}";
+    
     document.querySelectorAll('.toggle-status-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             const id = this.dataset.id;
-            const url = urlTemplate.replace('ID_ETAPA', id);
+            const url = urlTemplate.replace('ID_ESCOLHA', id);
 
             fetch(url, {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
                     'Accept': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
                 },
             })
             .then(res => res.json())
             .then(data => {
-                console.log("data",data);
+                console.log("data::",data);
                 if (data.success) {
                     if (data.status) {
                         this.classList.remove('btn-secondary');
@@ -326,13 +283,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         this.textContent = 'Inativo';
                     }
                 }
-                if (!data.success) {
-                    mostrarAlertaErro(data.message);
-                    return;
-                }
             });
         });
     });
 });
 </script>
-<!---------------- Final - Scripts JavaScript e Jquery ------------------ -->
+<!---------------- Final - Scripts JavaScript -------------------->

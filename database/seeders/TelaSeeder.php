@@ -20,6 +20,7 @@ class TelaSeeder extends Seeder
             ['slug' => 'menus', 'nome' => 'Menus', 'ativo' => '1'],
             ['slug' => 'ajuda', 'nome' => 'Ajuda', 'ativo' => '1'],
             ['slug' => 'documentos', 'nome' => 'Documentos', 'ativo' => '1'],
+            ['slug' => 'setores', 'nome' => 'Setores', 'ativo' => '1'],
             ['slug' => 'candidatos', 'nome' => 'Candidatos', 'ativo' => '1'],
             ['slug' => 'etapas', 'nome' => 'Etapas', 'ativo' => '1'],
             ['slug' => 'escolhas', 'nome' => 'Escolhas', 'ativo' => '1'],
