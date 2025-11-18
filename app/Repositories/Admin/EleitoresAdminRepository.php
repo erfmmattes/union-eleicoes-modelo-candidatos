@@ -4,6 +4,7 @@ namespace App\Repositories\Admin;
 
 use App\Models\DadosEleicaoStatus;
 use App\Models\Eleitor;
+use App\Models\Setor;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Exception;
@@ -49,6 +50,11 @@ class EleitoresAdminRepository
     public function buscarPorId(int $id)
     {
         return $this->model->find($id);
+    }
+
+    public function setoresLista()
+    {
+        return Setor::where('status', '=', '1')->orderBy('nome', 'asc')->get();
     }
 
     public function criar(array $dados)

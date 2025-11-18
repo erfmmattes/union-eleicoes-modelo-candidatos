@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Cache;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Services\Admin\EleitoresAdminService;
 use App\Services\Admin\ListaUsuarioTelaPermissaoService;
+use App\Models\Eleitor;
 
 class EleitoresAdminController extends Controller
 {
@@ -55,7 +56,9 @@ class EleitoresAdminController extends Controller
         if (empty($todasPermissoes['eleitores']['criar'] ?? false)) {
             abort(403, 'Você não tem permissão para visualizar esta página.');
         }
-        return view('adminEleitores.create');
+        $eleitor = new Eleitor();
+        $setoresEleitores = $this->eleitoresAdminService->listaSetores();
+        return view('adminEleitores.create', compact('eleitor','setoresEleitores'));
     }
 
     public function store(Request $request)
@@ -90,7 +93,8 @@ class EleitoresAdminController extends Controller
             abort(403, 'Você não tem permissão para visualizar esta página.');
         }
         $eleitor = $this->eleitoresAdminService->buscarPorId($id);
-        return view('adminEleitores.edit', compact('eleitor'));
+        $setoresEleitores = $this->eleitoresAdminService->listaSetores();
+        return view('adminEleitores.edit', compact('eleitor','setoresEleitores'));
     }
 
     public function update(Request $request, int $id)

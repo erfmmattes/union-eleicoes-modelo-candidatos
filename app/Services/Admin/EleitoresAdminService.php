@@ -53,6 +53,16 @@ class EleitoresAdminService
         }
     }
 
+    public function listaSetores()
+    {
+        try {
+            return $this->eleitoresAdminRepository->setoresLista();
+        } catch (Exception $e) {
+            $this->logRepository->criarLog('erro - listaSetores - EleitoresAdminService', $e);
+            return null;
+        }
+    }
+
     public function criar(array $dados)
     {
         try {

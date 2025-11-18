@@ -35,8 +35,20 @@
     </div>
 
     <div class="col-md-6">
-        <label class="form-label">Setor</label>
-        <input type="text" name="setor" class="form-control" value="{{ old('setor', $eleitor->setor ?? '') }}">
+        <label class="form-label fw-semibold">Setor</label>
+
+        <select name="setor" class="form-select" required>
+            @if($eleitor->setor === null)
+                <option value="">Selecione um setor</option>
+            @endif
+
+            @foreach($setoresEleitores as $setor)
+                <option value="{{ $setor->nome }}"
+                    {{ old('setor', $eleitor->setor ?? null) == $setor->nome ? 'selected' : '' }}>
+                    {{ $setor->nome }}
+                </option>
+            @endforeach
+        </select>
     </div>
 
     <div class="col-md-6">
