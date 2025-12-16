@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Union Eleições')</title>
+    <title>@yield('title', 'Unir Votações')</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
@@ -78,7 +78,7 @@
             transform: rotate(180deg);
         }
         .logo-union {
-            width: 180px;
+            width: 120px;
         }
         .fundo-circular {
             background: linear-gradient(135deg, #183F77, #4A90E2);
@@ -168,7 +168,14 @@
             <div class="d-flex flex-column h-100 overflow-auto">
                 <div class="sidebar-header d-flex justify-content-center pt-2 pb-4">
                     <a class="navbar-brand fw-bold text-dark fs-5" href="{{ route('admin.home') }}">
-                        <img src="{{ asset('img/logotipo-union/union-eleicoes.png') }}" alt="Union Eleições" class="logo-union">
+                        <img src="{{ asset('img/logotipo-union/union-eleicoes.png') }}" alt="Unir Votações" class="logo-union">
+                         <!-- <img src="{{ asset('img/logotipo-unir-votacoes/unir-votacoes.png') }}" alt="Unir Votações" class="logo-union"> -->
+                        <!-- <div class="brand">
+                            <div class="logo">UV</div>
+                            <div>
+                            <div style="font-weight:700">Unir Votações</div>
+                            </div>
+                        </div> -->
                     </a>
                 </div>
                 
@@ -682,7 +689,7 @@
                     
                     <!-- Brand (Only visible on mobile, hidden on desktop since sidebar has it) -->
                     <a class="navbar-brand fw-bold text-dark d-lg-none" href="{{ route('admin.home') }}">
-                        <img src="{{ asset('img/logotipo-union/union-eleicoes.png') }}" alt="Union Eleições" class="logo-union">
+                        <img src="{{ asset('img/logotipo-union/union-eleicoes.png') }}" alt="Unir Votações" class="logo-union">
                     </a>
 
                     <!-- Spacer for layout consistency -->

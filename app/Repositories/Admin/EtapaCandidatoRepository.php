@@ -64,4 +64,18 @@ class EtapaCandidatoRepository
 
         return $etapa->delete();
     }
+
+    public function atualizarStatus($id, int $novoStatus)
+    {
+        return EtapaCandidato::where('id', $id)->update([
+            'status' => $novoStatus,
+        ]);
+    }
+
+    public function verificaEtapaAtiva($id)
+    {
+        return EtapaCandidato::where('status', 1)
+            ->where('id', '!=', $id)
+            ->exists();
+    }
 }

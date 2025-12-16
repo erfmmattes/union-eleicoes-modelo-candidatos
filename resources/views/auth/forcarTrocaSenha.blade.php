@@ -1,6 +1,6 @@
 @extends('layouts.appTrocaDeSenhaUser')
 
-@section('title', 'Union Eleições - Trocar Senha Obrigatória')
+@section('title', 'Unir Votações - Trocar Senha Obrigatória')
 
 @section('content')
 <div class="container mt-2">

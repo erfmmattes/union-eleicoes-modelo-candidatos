@@ -1,5 +1,5 @@
 @extends('layouts.appMasterAdmin')
-@section('title', 'Union Eleições - Enviar Senha para os eleitores não votates')
+@section('title', 'Unir Votações - Enviar Senha para os eleitores não votates')
 
 @section('content')
 <div class="container">

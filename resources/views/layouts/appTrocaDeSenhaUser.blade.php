@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Union Eleições')</title>
+    <title>@yield('title', 'Unir Votações')</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
@@ -171,7 +171,7 @@
 
                     <div class="sidebar-header d-flex justify-content-center">
                         <a class="navbar-brand fw-bold text-dark fs-5" href="{{ route('admin.home') }}">
-                            <img src="{{ asset('img/logotipo-union/union-eleicoes.png') }}" alt="Union Eleições" class="logo-union">
+                            <img src="{{ asset('img/logotipo-union/union-eleicoes.png') }}" alt="Unir Votações" class="logo-union">
                         </a>
                     </div>
 

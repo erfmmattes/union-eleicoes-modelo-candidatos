@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 // Rotas do Front
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\LoginEleicaoController;
+use App\Http\Controllers\Front\VotarController;
+use App\Http\Controllers\Front\ComprovanteController;
 use App\Http\Controllers\Front\DocumentosController;
 use App\Http\Controllers\Front\AjudaController;
 use App\Http\Controllers\Front\TrocarSenhaFrontController;
@@ -55,6 +57,15 @@ Route::middleware(['eleitor.auth', 'verifica.sessao.front', 'periodo.eleicao'])-
     Route::post('/apos-login-trocar-senha', [LoginEleicaoController::class, 'senhaTrocarAposLogin'])->name('loginEleicao.senhaTrocarAposLogin');
     Route::get('/dados-eleitor', [LoginEleicaoController::class, 'dadosEleitor'])->name('loginEleicao.dadosEleitor');
     Route::get('/login-eleicao/logout', [LoginEleicaoController::class, 'logout'])->name('loginEleicao.logout');
+
+    // Votar do Front
+    Route::get('/votar', [VotarController::class, 'index'])->name('votar.index');
+    Route::post('/votar/salvar-voto', [VotarController::class, 'salvarEtapa'])->name('votar.salvarEtapa');
+
+    // Comprovante do Front
+    Route::get('/comprovante', [ComprovanteController::class, 'index'])->name('comprovante.index');
+    Route::post('/receber-por-email-comprovante', [ComprovanteController::class, 'receberPorEmail'])->name('comprovante.receberPorEmail');
+    Route::post('/baixar-pdf-comprovante', [ComprovanteController::class, 'baixarPdfComprovante'])->name('comprovante.baixarPdfComprovante');
 
     // Documentos do Front
     Route::get('/documentos', [DocumentosController::class, 'index'])->name('documentos.index');
@@ -193,7 +204,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/etapas/{id}/edit', [EtapaCandidatoController::class, 'edit'])->name('adminEtapa.edit');
     Route::put('/etapas/{id}', [EtapaCandidatoController::class, 'update'])->name('adminEtapa.update');
     Route::delete('/etapas/{id}', [EtapaCandidatoController::class, 'destroy'])->name('adminEtapa.destroy');
-    Route::post('etapas/{id}/status', [EtapaCandidatoController::class, 'toggleStatus'])->name('adminEtapa.status');
+    Route::post('/1/etapas/abrir/{id}', [EtapaCandidatoController::class, 'abrir'])->name('adminEtapa.abrir');
+    Route::post('/2/etapas/pular/{id}', [EtapaCandidatoController::class, 'pular'])->name('adminEtapa.pular');
+    Route::post('/3/etapas/finalizar/{id}', [EtapaCandidatoController::class, 'finalizar'])->name('adminEtapa.finalizar');
 
     // Escolhas do Admin
     Route::get('/escolhas', [EscolhaCandidatoController::class, 'index'])->name('adminEscolhas.index');

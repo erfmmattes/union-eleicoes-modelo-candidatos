@@ -27,7 +27,7 @@ class ResetPasswordMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Union Eleições - Recuperação de Senha')
+        return $this->subject('Unir Votações - Recuperação de Senha')
                     ->view('emails.resetPassword');
     }
 }

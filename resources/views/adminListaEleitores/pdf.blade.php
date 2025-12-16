@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Union Eleições - Lista de Eleitores</title>
+    <title>Unir Votações - Lista de Eleitores</title>
     <link rel="icon" type="image/png" sizes="32x32" href="{{ public_path('img/icon-union/union-eleicoes.png') }}">
     <style>
         @page {
@@ -92,7 +92,7 @@
     <!-- CABEÇALHO FIXO -->
     <header>
         <div class="d-flex">
-            <img src="{{ public_path('img/logotipo-union/union-eleicoes.png') }}" class="l-logo" alt="Union Eleições">
+            <img src="{{ public_path('img/logotipo-union/union-eleicoes.png') }}" class="l-logo" alt="Unir Votações">
             @if(isset($configuracao) && !empty($configuracao->caminho))
                 <img src="{{ public_path('storage/' . $configuracao->caminho) }}" class="l-logo" alt="{{ $configuracao->nome_cliente }}">
             @endif
@@ -102,7 +102,7 @@
 
     <!-- RODAPÉ FIXO -->
     <footer>
-        Union Eleições © {{ date('Y') }} — 
+        Unir Votações © {{ date('Y') }} — 
         Página <span class="page-number"></span> —
         Emitido em {{ now()->format('d/m/Y') }} às {{ now()->format('H:i:s') }} (Horário de Brasília)
     </footer>

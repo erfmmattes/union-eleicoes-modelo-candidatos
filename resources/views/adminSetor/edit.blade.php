@@ -1,5 +1,5 @@
 @extends('layouts.appMasterAdmin')
-@section('title', 'Union Eleições - Editar Setor')
+@section('title', 'Unir Votações - Editar Setor')
 
 @section('content')
 <div class="container">

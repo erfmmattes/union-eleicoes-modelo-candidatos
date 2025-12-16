@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Union Eleições - Dados da Eleição</title>
+    <title>Unir Votações - Dados da Eleição</title>
     <link rel="icon" type="image/png" sizes="32x32" href="{{ public_path('img/icon-union/union-eleicoes.png') }}">
     <style>
         @page { margin: 100px 40px 60px 40px; }
@@ -21,12 +21,12 @@
 <body>
 
 <header>
-    <img src="{{ public_path('img/logotipo-union/union-eleicoes.png') }}" alt="Union Eleições">
+    <img src="{{ public_path('img/logotipo-union/union-eleicoes.png') }}" alt="Unir Votações">
     <h2>Dados da Eleição</h2>
 </header>
 
 <footer>
-    Union Eleições © {{ date('Y') }} —
+    Unir Votações © {{ date('Y') }} —
     Página <span class="page-number"></span> —
     Emitido em {{ now()->format('d/m/Y H:i:s') }}
 </footer>

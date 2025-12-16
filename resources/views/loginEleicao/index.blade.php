@@ -1,5 +1,5 @@
 @extends('layouts.appMasterFront')
-@section('title', 'Union Eleições - Login')
+@section('title', 'Unir Votações - Login')
 
 @section('content')
 <section class="hero d-flex align-items-center justify-content-center mt-5">

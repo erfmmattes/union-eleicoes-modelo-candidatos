@@ -1,12 +1,21 @@
 @extends('layouts.appMasterFront')
-@section('title', 'Union Eleições - Home')
+@section('title', 'Unir Votações - Home')
 @section('content')
 
 @if(session('front_logado'))
 <section class="hero d-flex align-items-center justify-content-center mt-5">
     <div class="card shadow-lg border-0 rounded-4 p-4 lar-mobile" style="max-width: 500px;">
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show alert-temporaria" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+            </div>
+        @endif
         <div class="text-center">
-            <h1 class="h4 fw-bold text-dark">Bem-vindo, {{ session('eleitor_nome') }}!</h1>
+             <h3 class="h4 fw-bold text-dark">
+                Plataforma de Votação Online<br />
+                {{ $configuracao->nome_eleicao }}
+            </h3>
             <p class="text-muted">Você está logado na plataforma de votação online.</p>
         </div>
         <div id="acaoVoto">
@@ -123,13 +132,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 if (data.votou) {
                     acaoVoto.innerHTML = `
-                        <a href="{{ route('loginEleicao.homeLogadoFront') }}" class="btn btn-hero btn-lg w-100">
+                        <a href="{{ route('comprovante.index') }}" class="btn btn-hero btn-lg w-100">
                             Visualizar Comprovante
                         </a>
                     `;
                 } else {
                     acaoVoto.innerHTML = `
-                        <a href="{{ route('loginEleicao.homeLogadoFront') }}" class="btn btn-hero btn-lg w-100">
+                        <a href="{{ route('votar.index') }}" class="btn btn-hero btn-lg w-100">
                             Votar
                         </a>
                     `;
@@ -139,6 +148,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     atualizarBotao();
     setInterval(atualizarBotao, 5000);
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const alerts = document.querySelectorAll('.alert-temporaria');
+    alerts.forEach(alert => {
+        setTimeout(() => {
+            alert.style.transition = 'opacity 0.5s';
+            alert.style.opacity = '0';
+            setTimeout(() => alert.remove(), 500);
+        }, 5000);
+    });
 });
 </script>
 <!---------------- Final - Script ------------------>

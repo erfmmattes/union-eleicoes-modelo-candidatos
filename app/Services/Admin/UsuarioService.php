@@ -65,9 +65,9 @@ class UsuarioService
 
             $usuario = $this->usuarioRepository->criar($dadosUsuario);
             $configuracao = $this->configuracoesRepository->getFirstOrCreate();
-            $assunto = 'Union Eleições - Senha do Admin';
-            $remetenteEmail = 'nao-responda@unioneleicoes.com';
-            $remetenteNome = 'Union Eleições';
+            $assunto = 'Unir Votações - Senha do Admin';
+            $remetenteEmail = 'no-reply@unirvotacoes.com.br';
+            $remetenteNome = 'Unir Votações';
 
             Mail::send('emails.novoUsuario', [
                 'usuario' => $usuario,

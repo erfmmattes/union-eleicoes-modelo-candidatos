@@ -1,6 +1,6 @@
 @extends('layouts.appTrocaDeSenhaUser')
 
-@section('title', 'Union Eleições - Página não encontrada')
+@section('title', 'Unir Votações - Página não encontrada')
 
 @section('content')
 <div class="container py-5 d-flex align-items-center justify-content-center" style="min-height: 80vh;">

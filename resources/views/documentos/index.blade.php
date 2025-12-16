@@ -1,5 +1,5 @@
 @extends('layouts.appMasterFront')
-@section('title', 'Union Eleições - Documentos')
+@section('title', 'Unir Votações - Documentos')
 @section('content')
 <section class="hero">
     <div class="aba-geral">

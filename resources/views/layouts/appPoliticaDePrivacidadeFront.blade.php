@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>@yield('title', 'Union Eleições')</title>
+  <title>@yield('title', 'Unir Votações')</title>
 
   <!-- Fontes e icon -->
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wdth,wght@75..100,200..900&display=swap" rel="stylesheet">
@@ -98,7 +98,7 @@
   <!-- HEADER -->
   <header>
     <a href="{{ route('home.index') }}" class="m-auto">
-        <img src="{{ asset('img/logotipo-union/union-eleicoes.png') }}" alt="Union Eleições" class="logo-union">
+        <img src="{{ asset('img/logotipo-union/union-eleicoes.png') }}" alt="Unir Votações" class="logo-union">
     </a>
   </header>
 
@@ -110,7 +110,7 @@
   <!-- FOOTER -->
   <footer>
     <div class="container text-center alt-telefone">
-          &copy; {{ date('Y') }} Union Eleições - Todos os direitos reservados
+          &copy; {{ date('Y') }} Unir Votações - Todos os direitos reservados
           @if(!empty($configuracao->suporte == 1))
               | Suporte: 
               <a href="tel:{{ $configuracao->numero_suporte }}">

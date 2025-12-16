@@ -1,5 +1,5 @@
 @extends('layouts.appMasterAdmin')
-@section('title', 'Union Eleições - Acesso Negado!')
+@section('title', 'Unir Votações - Acesso Negado!')
 
 @section('content')
 <div class="container text-center py-5">

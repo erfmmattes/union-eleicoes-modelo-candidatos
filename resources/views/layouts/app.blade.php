@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title', 'Union Eleições')</title>
+    <title>@yield('title', 'Unir Votações')</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -50,7 +50,7 @@
         <nav class="navbar navbar-expand-md navbar-light cor-fundo shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/admin/login') }}">
-                    <img src="{{ asset('img/logotipo-union/union-eleicoes.png') }}" alt="Union Eleições" class="logo-union">
+                    <img src="{{ asset('img/logotipo-union/union-eleicoes.png') }}" alt="Unir Votações" class="logo-union">
                 </a>
                 <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -109,7 +109,7 @@
         <!-- FOOTER -->
         <footer>
             <div class="text-center">
-                &copy; {{ date('Y') }} Union Eleições - Todos os direitos reservados
+                &copy; {{ date('Y') }} Unir Votações - Todos os direitos reservados
             </div>
         </footer>
 </body>

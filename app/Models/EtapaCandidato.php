@@ -24,7 +24,7 @@ class EtapaCandidato extends Model
     public $timestamps = true;
 
     protected $casts = [
-        'status' => 'boolean',
+        // 'status' => 'boolean',
     ];
 
     /**

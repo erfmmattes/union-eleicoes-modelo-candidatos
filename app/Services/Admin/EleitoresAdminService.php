@@ -230,14 +230,14 @@ class EleitoresAdminService
                         $configuracao = Configuracao::find(1);
                         $rem = $configuracao->remetente_do_email;
                         if (preg_match('/^(.*?)\s*-\s*<(.+?)>$/', $rem, $matches)) {
-                            $nome = trim($matches[1]);   // Union Eleições
-                            $email = trim($matches[2]);  // no-reply@unioneleicoes.com.br
+                            $nome = trim($matches[1]);   // Unir Votações
+                            $email = trim($matches[2]);  // no-reply@unirvotacoes.com.br
                         }
 
                         $configuracao = $this->configuracoesRepository->getFirstOrCreate();
-                        $assunto = $configuracao->assunto_do_email ?? 'Union Eleições - Sua senha de acesso ao sistema de eleição';
-                        $remetenteEmail = $email ?? 'nao-responda@unioneleicoes.com';
-                        $remetenteNome = $nome ?? 'Union Eleições';
+                        $assunto = $configuracao->assunto_do_email ?? 'Unir Votações - Sua senha de acesso ao sistema de eleição';
+                        $remetenteEmail = $email ?? 'no-reply@unirvotacoes.com.br';
+                        $remetenteNome = $nome ?? 'Unir Votações';
 
                         Mail::send('emails.senha_eleitor', [
                             'eleitor' => $eleitor,
@@ -342,14 +342,14 @@ class EleitoresAdminService
                         $configuracao = Configuracao::find(1);
                         $rem = $configuracao->remetente_do_email;
                         if (preg_match('/^(.*?)\s*-\s*<(.+?)>$/', $rem, $matches)) {
-                            $nome = trim($matches[1]);   // Union Eleições
-                            $email = trim($matches[2]);  // no-reply@unioneleicoes.com.br
+                            $nome = trim($matches[1]);   // Unir Votações
+                            $email = trim($matches[2]);  // no-reply@unirvotacoes.com.br
                         }
 
                         $configuracao = $this->configuracoesRepository->getFirstOrCreate();
-                        $assunto = $configuracao->assunto_do_email ?? 'Union Eleições - Sua senha de acesso ao sistema de eleição';
-                        $remetenteEmail = $email ?? 'nao-responda@unioneleicoes.com';
-                        $remetenteNome = $nome ?? 'Union Eleições';
+                        $assunto = $configuracao->assunto_do_email ?? 'Unir Votações - Sua senha de acesso ao sistema de eleição';
+                        $remetenteEmail = $email ?? 'no-reply@unirvotacoes.com.br';
+                        $remetenteNome = $nome ?? 'Unir Votações';
 
                         Mail::send('emails.senha_eleitor', [
                             'eleitor' => $eleitor,
@@ -517,14 +517,14 @@ class EleitoresAdminService
                         $configuracao = Configuracao::find(1);
                         $rem = $configuracao->remetente_do_email;
                         if (preg_match('/^(.*?)\s*-\s*<(.+?)>$/', $rem, $matches)) {
-                            $nome = trim($matches[1]);   // Union Eleições
-                            $email = trim($matches[2]);  // no-reply@unioneleicoes.com.br
+                            $nome = trim($matches[1]);   // Unir Votações
+                            $email = trim($matches[2]);  // no-reply@unirvotacoes.com.br
                         }
 
                         $configuracao = $this->configuracoesRepository->getFirstOrCreate();
-                        $assunto = $configuracao->assunto_do_email ?? 'Union Eleições - Sua senha de acesso ao sistema de eleição';
-                        $remetenteEmail = $email ?? 'nao-responda@unioneleicoes.com';
-                        $remetenteNome = $nome ?? 'Union Eleições';
+                        $assunto = $configuracao->assunto_do_email ?? 'Unir Votações - Sua senha de acesso ao sistema de eleição';
+                        $remetenteEmail = $email ?? 'no-reply@unirvotacoes.com.br';
+                        $remetenteNome = $nome ?? 'Unir Votações';
 
                         Mail::send('emails.senha_eleitor', [
                             'eleitor' => $eleitor,
@@ -635,14 +635,14 @@ class EleitoresAdminService
                         $configuracao = Configuracao::find(1);
                         $rem = $configuracao->remetente_do_email;
                         if (preg_match('/^(.*?)\s*-\s*<(.+?)>$/', $rem, $matches)) {
-                            $nome = trim($matches[1]);   // Union Eleições
-                            $email = trim($matches[2]);  // no-reply@unioneleicoes.com.br
+                            $nome = trim($matches[1]);   // Unir Votações
+                            $email = trim($matches[2]);  // no-reply@unirvotacoes.com.br
                         }
 
                         $configuracao = $this->configuracoesRepository->getFirstOrCreate();
-                        $assunto = $configuracao->assunto_do_email ?? 'Union Eleições - Sua senha de acesso ao sistema de eleição';
-                        $remetenteEmail = $email ?? 'nao-responda@unioneleicoes.com';
-                        $remetenteNome = $nome ?? 'Union Eleições';
+                        $assunto = $configuracao->assunto_do_email ?? 'Unir Votações - Sua senha de acesso ao sistema de eleição';
+                        $remetenteEmail = $email ?? 'no-reply@unirvotacoes.com.br';
+                        $remetenteNome = $nome ?? 'Unir Votações';
 
                         Mail::send('emails.senha_eleitor', [
                             'eleitor' => $eleitor,

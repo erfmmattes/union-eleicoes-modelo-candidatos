@@ -1,5 +1,5 @@
 @extends('layouts.appMasterAdmin')
-@section('title', 'Union Eleições - Etapas de Candidatos')
+@section('title', 'Unir Votações - Etapas de Candidatos')
 
 @section('content')
 <div class="container">
@@ -19,7 +19,7 @@
 
                 <div class="col-md-6">
                     <input type="text" name="q" value="{{ request('q') }}" 
-                           class="form-control tam-in" placeholder="Pesquisar por nome da etapa">
+                           class="form-control tam-in" placeholder="Pesquisar por etapa">
                 </div>
 
                 <div class="col-md-2">
@@ -72,12 +72,12 @@
                         <thead class="table-light bod-tabled">
                             <tr>
                                 <th>ID</th>
-                                <th>Nome</th>
-                                <th>Setor</th>
-                                <th>Sequência</th>
+                                <th>Pauta</th>
+                                <th>Ordem Voto</th>
                                 @if($todasPermissoes['etapas']['editar'] === true)
                                     <th>Status</th>
                                 @endif
+                                <th class="text-center">Abre | Pula | Finaliza</th>
                                 <th class="text-center">Ações</th>
                             </tr>
                         </thead>
@@ -86,40 +86,40 @@
                                 <tr>
                                     <td class="fw-semibold text-dark">{{ $etapa->id }}</td>
                                     <td>{{ \Illuminate\Support\Str::limit($etapa->nome, 40) }}</td>
-                                    <td>{{ $etapa->setor->nome }}</td>
                                     <td>{{ $etapa->sequencia }}</td>
+                                    {{-- STATUS --}}
+                                    <td class="col-status"
+                                        data-status="{{ $etapa->status }}">
+                                    </td>
 
-                                    @if($todasPermissoes['etapas']['editar'] === true)
-                                        <td>
-                                            <button class="btn btn-sm toggle-status-btn {{ $etapa->status ? 'btn-success' : 'btn-secondary' }}"
-                                                    data-id="{{ $etapa->id }}">
-                                                {{ $etapa->status ? 'Ativo' : 'Inativo' }}
-                                            </button>
-                                        </td>
-                                    @endif
+                                    <td class="col-botoes text-center"
+                                        data-status="{{ $etapa->status }}"
+                                        data-id="{{ $etapa->id }}">
+                                    </td>
 
+                                    {{-- AÇÕES PADRÃO --}}
                                     <td class="text-center">
                                         <div class="d-flex justify-content-center align-items-center flex-column flex-md-row">
 
                                             @if($todasPermissoes['etapas']['ver'] === true)
-                                                <a href="{{ route('admin.adminEtapa.show', $etapa->id) }}" title="Ver" class="btn btn-sm btn-outline-primary mb-2 mb-md-0 me-md-2">
+                                                <a href="{{ route('admin.adminEtapa.show', $etapa->id) }}" title="Ver"
+                                                class="btn btn-sm btn-outline-primary mb-2 mb-md-0 me-md-2">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
                                             @endif
 
                                             @if($todasPermissoes['etapas']['editar'] === true)
-                                                <a href="{{ route('admin.adminEtapa.edit', $etapa->id) }}" 
-                                                title="Editar" 
+                                                <a href="{{ route('admin.adminEtapa.edit', $etapa->id) }}" title="Editar"
                                                 class="btn btn-sm btn-outline-primary mb-2 mb-md-0 me-md-2">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
                                             @endif
 
                                             @if($todasPermissoes['etapas']['deletar'] === true)
-                                                <button type="button" 
-                                                        class="btn btn-sm btn-outline-danger" 
-                                                        title="Excluir" 
-                                                        data-bs-toggle="modal" 
+                                                <button type="button"
+                                                        class="btn btn-sm btn-outline-danger"
+                                                        title="Excluir"
+                                                        data-bs-toggle="modal"
                                                         data-bs-target="#deleteEtapa{{ $etapa->id }}">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
@@ -174,6 +174,30 @@
         </div>
     </div>
 @endforeach
+
+<!-- Modal de Erro de Validação -->
+<div class="modal fade" id="modalErroValidacao" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-3">
+
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title m-auto">Validação Necessária</h5>
+            </div>
+
+            <div class="modal-body text-center">
+                <i class="fas fa-exclamation-triangle fa-3x text-danger mb-3"></i>
+                <p class="fs-6" id="textoErroValidacao"></p>
+            </div>
+
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn bot-cancela px-4" data-bs-dismiss="modal">
+                    Ok, entendi
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
 @endsection
 <!---------------- Início - Estillos CSS -------------------->
 <style>
@@ -263,6 +287,24 @@
     box-shadow: none !important;
     outline: none !important;
 }
+.bg-purple {
+    background-color: #C8A2FF !important;
+    color: #442477 !important;
+}
+.bg-warning {
+    background-color: #FFEAB5 !important;
+    color: #8C6A00 !important;
+    font-weight: 600;
+}
+.bg-success {
+    background-color: #C8FFE0 !important;
+    color: #007744 !important;
+    font-weight: 600;
+}
+.texto-padrao {
+    color: #ffffff !important;
+    font-weight: 600 !important;
+}
 </style>
 <!---------------- Final - Estillos CSS -------------------->
 <!---------------- Início - Scripts JavaScript e Jquery ------------------ -->
@@ -279,60 +321,121 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 <script>
-function mostrarAlertaErro(msg) {
-    const container = document.querySelector('.mensagens-retorno');
+document.addEventListener("DOMContentLoaded", () => {
 
-    const alerta = document.createElement('div');
-    alerta.className = "alert alert-danger alert-dismissible fade show alert-temporaria";
-    alerta.role = "alert";
-    alerta.innerHTML = `
-        ${msg}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
-    `;
+    const routes = {
+        abrir:      "{{ route('admin.adminEtapa.abrir', ['id' => 'ID']) }}",
+        pular:      "{{ route('admin.adminEtapa.pular', ['id' => 'ID']) }}",
+        finalizar:  "{{ route('admin.adminEtapa.finalizar', ['id' => 'ID']) }}"
+    };
 
-    container.appendChild(alerta);
+    const statusMap = {
+        0: { label: 'AGUARDANDO', color: 'bg-warning' },
+        1: { label: 'ATIVA',      color: 'bg-success texto-padrao' },
+        2: { label: 'FINALIZADA', color: 'bg-purple' },
+        3: { label: 'PULADA',     color: 'bg-secondary' }
+    };
 
-    setTimeout(() => alerta.remove(), 5000);
-}
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const urlTemplate = "{{ route('admin.adminEtapa.status', ['id' => 'ID_ETAPA']) }}";
+    /* ===============================
+       RENDERIZA UMA LINHA
+    =============================== */
+    function renderRow(row, status) {
+        status = Number(status);
 
-    document.querySelectorAll('.toggle-status-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const id = this.dataset.id;
-            const url = urlTemplate.replace('ID_ETAPA', id);
+        const tdStatus  = row.querySelector('.col-status');
+        const tdButtons = row.querySelector('.col-botoes');
+        const id        = tdButtons.dataset.id;
 
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Accept': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
-                },
-            })
-            .then(res => res.json())
-            .then(data => {
-                console.log("data",data);
-                if (data.success) {
-                    if (data.status) {
-                        this.classList.remove('btn-secondary');
-                        this.classList.add('btn-success');
-                        this.textContent = 'Ativo';
-                    } else {
-                        this.classList.remove('btn-success');
-                        this.classList.add('btn-secondary');
-                        this.textContent = 'Inativo';
+        const cfg = statusMap[status];
+        if (!cfg) return;
+
+        // STATUS
+        tdStatus.innerHTML = `
+            <span class="badge ${cfg.color}">
+                ${cfg.label}
+            </span>
+        `;
+
+        // BOTÕES
+        if (status === 0) {
+            tdButtons.innerHTML = `
+                <button class="btn btn-sm btn-info me-1 btn-etapa texto-padrao"
+                    data-id="${id}" data-action="abrir">ABRIR</button>
+                <button class="btn btn-sm btn-warning me-1 btn-etapa texto-padrao"
+                    data-id="${id}" data-action="pular">PULAR</button>
+            `;
+        }
+        else if (status === 1) {
+            tdButtons.innerHTML = `
+                <button class="btn btn-sm btn-primary btn-etapa texto-padrao"
+                    data-id="${id}" data-action="finalizar">FINALIZAR</button>
+            `;
+        }
+        else {
+            tdButtons.innerHTML = `<span class="text-muted">—</span>`;
+        }
+
+        // mantém DOM sincronizado
+        tdStatus.dataset.status  = status;
+        tdButtons.dataset.status = status;
+    }
+
+    /* ===============================
+       RENDERIZA AO CARREGAR
+    =============================== */
+    document.querySelectorAll("tbody tr").forEach(row => {
+        const tdStatus = row.querySelector(".col-status");
+        if (!tdStatus) return;
+
+        renderRow(row, tdStatus.dataset.status);
+    });
+
+    /* ===============================
+       CLICK (EVENT DELEGATION)
+    =============================== */
+    document.addEventListener("click", async (e) => {
+
+        const btn = e.target.closest(".btn-etapa");
+        if (!btn) return;
+
+        const id     = btn.dataset.id;
+        const action = btn.dataset.action;
+        const row    = btn.closest("tr");
+
+        if (!routes[action]) return;
+
+        try {
+            const res = await fetch(
+                routes[action].replace("ID", id),
+                {
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                        "Accept": "application/json",
+                        "X-Requested-With": "XMLHttpRequest"
                     }
                 }
-                if (!data.success) {
-                    mostrarAlertaErro(data.message);
-                    return;
-                }
-            });
-        });
+            );
+
+            const data = await res.json();
+
+            if (!data.success) {
+                const textoModal = document.getElementById('textoErroValidacao');
+                textoModal.textContent = data.message || "Erro ao processar ação.";
+
+                const modal = new bootstrap.Modal(document.getElementById('modalErroValidacao'));
+                modal.show();
+
+                return;
+            }
+
+            renderRow(row, data.status);
+
+        } catch (err) {
+            alert("Erro de comunicação com o servidor.");
+        }
     });
+
 });
 </script>
 <!---------------- Final - Scripts JavaScript e Jquery ------------------ -->

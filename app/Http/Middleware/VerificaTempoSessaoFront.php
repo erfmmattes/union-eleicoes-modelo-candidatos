@@ -11,7 +11,7 @@ use App\Models\EleitorLogado;
 class VerificaTempoSessaoFront
 {
     // Tempo limite absoluto em segundos (3600 segundos = 1 hora)
-    private int $tempoLimite = 1800; // 30 minutos
+    private int $tempoLimite = 3600; // 1 hora
     private int $alertaAntes = 300;  // 5 minutos antes para aviso (opcional)
 
     public function handle(Request $request, Closure $next)

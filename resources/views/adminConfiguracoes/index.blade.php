@@ -1,5 +1,5 @@
 @extends('layouts.appMasterAdmin')
-@section('title', 'Union Eleições - Configurações')
+@section('title', 'Unir Votações - Configurações')
 
 @section('content')
 <div class="container-fluid">
@@ -275,7 +275,7 @@
                                     <input type="text" name="remetente_do_email" id="remetente_do_email"
                                         class="form-control"
                                         value="{{ old('remetente_do_email', $configuracao->remetente_do_email ?? '') }}"
-                                        placeholder='"Union Eleições - <no-reply@unioneleicoes.com.br>"'>
+                                        placeholder='"Unir Votações - <no-reply@unirvotacoes.com.br>"'>
                                 </div>
 
                                 <!-- Assunto do e-mail para envio de senha -->

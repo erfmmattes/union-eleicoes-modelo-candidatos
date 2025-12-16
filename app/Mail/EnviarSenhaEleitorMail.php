@@ -23,9 +23,9 @@ class EnviarSenhaEleitorMail extends Mailable
 
     public function build()
     {
-        $assunto = 'Union Eleições - Sua senha de acesso ao sistema de eleição';
-        $remetenteEmail = 'nao-responda@unioneleicoes.com';
-        $remetenteNome = 'Union Eleições';
+        $assunto = 'Unir Votações - Sua senha de acesso ao sistema de eleição';
+        $remetenteEmail = 'no-reply@unirvotacoes.com.br';
+        $remetenteNome = 'Unir Votações';
 
         return $this->from($remetenteEmail, $remetenteNome)
                     ->subject($assunto)

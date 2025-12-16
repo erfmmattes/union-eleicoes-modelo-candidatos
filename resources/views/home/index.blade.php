@@ -1,5 +1,5 @@
 @extends('layouts.appMasterFront')
-@section('title', 'Union Eleições - Home')
+@section('title', 'Unir Votações - Home')
 @section('content')
 <section class="hero">
     {{-- Logo Cliente --}}
@@ -10,7 +10,7 @@
                 class="medida-logo-cliente">
         @else
             <img src="{{ asset('img/logotipo-union/union-eleicoes.png') }}" 
-                alt="Logo Union Eleições" 
+                alt="Logo Unir Votações" 
                 class="medida-logo-cliente">
         @endif
     </div>

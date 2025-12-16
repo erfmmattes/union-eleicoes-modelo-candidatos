@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Union Eleições - Login')
+@section('title', 'Unir Votações - Login')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">

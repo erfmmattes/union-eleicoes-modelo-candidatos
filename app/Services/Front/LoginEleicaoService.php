@@ -13,7 +13,7 @@ use Exception;
 
 class LoginEleicaoService
 {
-    protected $loginEleicaoService;
+    protected $loginEleicaoRepository;
     protected $logRepository;
 
     public function __construct(

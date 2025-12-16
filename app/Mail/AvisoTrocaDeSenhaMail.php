@@ -19,7 +19,7 @@ class AvisoTrocaDeSenhaMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Union Eleições - Aviso de Troca de Senha')
+        return $this->subject('Unir Votações - Aviso de Troca de Senha')
                     ->view('emails.avisoTrocaDeSenha');
     }
 }

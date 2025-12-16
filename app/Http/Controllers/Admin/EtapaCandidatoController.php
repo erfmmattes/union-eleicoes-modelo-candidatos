@@ -29,6 +29,7 @@ class EtapaCandidatoController extends Controller
         }
         $perPage = 10;
         $etapas = $this->etapaCandidatoService->listar($perPage);
+        // dd($etapas);
 
         if ($request->filled('q') || $request->filled('status')) {
             $query = \App\Models\EtapaCandidato::query();
@@ -130,46 +131,67 @@ class EtapaCandidatoController extends Controller
         return redirect()->route('admin.adminEtapa.index')->with('success', 'Etapa removida com sucesso!');
     }
 
-    public function toggleStatus($id)
+    public function abrir($id)
     {
-        $retorno = $this->etapaCandidatoService->toggleStatus($id);
-        if (!$retorno['allowed'] && empty($retorno['error'])) {
+        try {
+            $status = $this->etapaCandidatoService->mudarStatus($id, 1);
 
-            if (request()->ajax()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Não é possível alterar o status. Esta etapa possui escolhas vinculadas.'
-                ], 400);
-            }
-
-            return redirect()
-                ->route('admin.adminEtapa.index')
-                ->with('error', 'Não é possível alterar o status. Esta etapa possui escolhas vinculadas.');
-        }
-
-        if (!empty($retorno['error'])) {
-
-            if (request()->ajax()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Erro ao tentar atualizar o status. Tente novamente.'
-                ], 500);
-            }
-
-            return redirect()
-                ->route('admin.adminEtapa.index')
-                ->with('error', 'Erro ao tentar atualizar o status. Tente novamente.');
-        }
-
-        if (request()->ajax()) {
             return response()->json([
                 'success' => true,
-                'status' => (bool)$retorno['etapa']->status
+                'status' => $status,
+                'message' => 'Etapa aberta com sucesso!'
             ]);
-        }
 
-        return redirect()
-            ->route('admin.adminEtapa.index')
-            ->with('success', 'Status atualizado com sucesso!');
+        } catch (\DomainException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 422);
+
+        } catch (\Throwable $e) {
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function finalizar($id)
+    {
+        try {
+            $status = $this->etapaCandidatoService->mudarStatus($id, 2);
+
+            return response()->json([
+                'success' => true,
+                'status' => $status,
+                'message' => 'Etapa finalizada com sucesso!'
+            ]);
+
+        } catch (\Throwable $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function pular($id)
+    {
+        try {
+            $status = $this->etapaCandidatoService->mudarStatus($id, 3);
+
+            return response()->json([
+                'success' => true,
+                'status' => $status,
+                'message' => 'Etapa pulada com sucesso!'
+            ]);
+
+        } catch (\Throwable $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 }

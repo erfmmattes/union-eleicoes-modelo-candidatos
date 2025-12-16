@@ -21,7 +21,7 @@ class NovoUsuarioMail extends Mailable
 
     public function build()
     {
-        return $this->subject('Union Eleições - Acesso ao Sistema Admin')
+        return $this->subject('Unir Votações - Acesso ao Sistema Admin')
             ->view('emails.novoUsuario')
             ->with([
                 'usuario' => $this->usuario,

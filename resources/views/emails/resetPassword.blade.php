@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Recuperação de Senha</title>
+    <title>Unir Votações - Recuperação de Senha</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -66,7 +66,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="{{ asset('img/logotipo-union/union-eleicoes.png') }}" alt="Union Eleições">
+            <img src="{{ asset('img/logotipo-union/union-eleicoes.png') }}" alt="Unir Votações">
         </div>
         <div class="content">
             <h2>Olá, {{ $nome }}!</h2>
@@ -80,7 +80,7 @@
             <p>Se você não solicitou a redefinição, nenhuma ação adicional é necessária.</p>
         </div>
         <div class="footer">
-            <p>Atenciosamente,<br><em>Equipe Union Eleições</em></p>
+            <p>Atenciosamente,<br><em>Equipe Unir Votações</em></p>
         </div>
     </div>
 </body>

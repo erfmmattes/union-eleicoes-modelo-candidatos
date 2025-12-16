@@ -1,5 +1,5 @@
 @extends('layouts.appMasterAdmin')
-@section('title', 'Union Eleições - Editar Etapa')
+@section('title', 'Unir Votações - Editar Etapa')
 
 @section('content')
 <div class="container">
@@ -44,7 +44,7 @@
                 <div class="row">
 
                     <div class="col-md-6 mb-3">
-                        <label class="form-label fw-semibold">Nome da Etapa</label>
+                        <label class="form-label fw-semibold">Etapa</label>
                         <input 
                             type="text" 
                             name="nome" 

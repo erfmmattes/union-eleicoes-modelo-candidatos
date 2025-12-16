@@ -1,13 +1,13 @@
 @extends('layouts.appPoliticaDePrivacidadeFront')
 
-@section('title', 'Política de Privacidade - Union Eleições')
+@section('title', 'Política de Privacidade - Unir Votações')
 
 @section('content')
 <div class="container mt-4">
     <div class="bg-white p-4 rounded shadow-sm">
-        <h1 class="mb-4 text-primary">Política de Privacidade - Union Eleições</h1>
+        <h1 class="mb-4 text-primary">Política de Privacidade - Unir Votações</h1>
 
-        <p>Na <strong>Union Eleições</strong>, sua privacidade é muito importante. Esta política explica como coletamos, usamos e protegemos suas informações ao acessar nosso site.</p>
+        <p>Na <strong>Unir Votações</strong>, sua privacidade é muito importante. Esta política explica como coletamos, usamos e protegemos suas informações ao acessar nosso site.</p>
 
         <h2 class="mt-4 text-success">1. Coleta de informações</h2>
         <p>Podemos coletar informações pessoais como nome, email e telefone quando você se cadastra, solicita serviços ou interage com nosso site. Também coletamos dados de navegação por meio de cookies e ferramentas de análise.</p>
@@ -49,7 +49,7 @@
         <p>Podemos atualizar esta política periodicamente. Recomendamos revisitar esta página para se manter informado sobre como protegemos sua privacidade.</p>
 
         <p>Para dúvidas ou solicitações relacionadas à privacidade, entre em contato conosco através do email: 
-            <a href="mailto:suporte@unioneleicoes.com">suporte@unioneleicoes.com</a>
+            <a href="mailto:suporte@unirvotacoes.com.br">suporte@unirvotacoes.com.br</a>
         </p>
     </div>
 </div>

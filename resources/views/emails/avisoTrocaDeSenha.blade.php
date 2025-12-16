@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Aviso de Troca de Senha</title>
+    <title>Unir Votações - Aviso de Troca de Senha</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -74,14 +74,14 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="{{ asset('img/logotipo-union/union-eleicoes.png') }}" alt="Union Eleições">
+            <img src="{{ asset('img/logotipo-union/union-eleicoes.png') }}" alt="Unir Votações">
         </div>
         <div class="content">
             <h2>Olá, {{ $nome }}!</h2>
             <p>Este e-mail é só um aviso que você acabou de trocar a sua senha.</p>
         </div>
         <div class="footer">
-            <p>Atenciosamente,<br><em>Equipe Union Eleições</em></p>
+            <p>Atenciosamente,<br><em>Equipe Unir Votações</em></p>
         </div>
     </div>
 </body>

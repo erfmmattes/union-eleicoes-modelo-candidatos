@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Union Eleições - Declaração da Eleição</title>
+    <title>Unir Votações - Declaração da Eleição</title>
     <link rel="icon" type="image/png" sizes="32x32" href="{{ public_path('img/icon-union/union-eleicoes.png') }}">
     <style>
         @page {
@@ -105,7 +105,7 @@
     <!-- HEADER FIXO -->
     <header>
         <div class="logos">
-            <img src="{{ public_path('img/logotipo-union/union-eleicoes.png') }}" alt="Union Eleições">
+            <img src="{{ public_path('img/logotipo-union/union-eleicoes.png') }}" alt="Unir Votações">
             @if(!empty($dados['caminho']))
                 <img src="{{ public_path('storage/' . $dados['caminho']) }}" class="l-logo" alt="{{ $dados['razao_social'] }}">
             @endif
@@ -115,14 +115,14 @@
 
     <!-- FOOTER FIXO -->
     <footer>
-        Union Eleições © {{ date('Y') }} —
+        Unir Votações © {{ date('Y') }} —
         Página <span class="page-number"></span> —
         Emitido em {{ now()->format('d/m/Y') }} às {{ now()->format('H:i') }} (Horário de Brasília)
     </footer>
 
     <!-- CONTEÚDO -->
     <main>
-        <p>Declaramos, para os devidos fins, que a eleição abaixo foi organizada e conduzida pela plataforma <strong>Union Eleições</strong>, garantindo sigilo, integridade e autenticidade dos votos, conforme parâmetros técnicos e jurídicos vigentes.</p>
+        <p>Declaramos, para os devidos fins, que a eleição abaixo foi organizada e conduzida pela plataforma <strong>Unir Votações</strong>, garantindo sigilo, integridade e autenticidade dos votos, conforme parâmetros técnicos e jurídicos vigentes.</p>
 
         <div class="dados">
             <p><strong>Cliente:</strong> {{ $dados['razao_social'] }}</p>
@@ -133,7 +133,7 @@
             <p><strong>Data de Geração:</strong> {{ $dados['data_geracao'] }}</p>
         </div>
 
-        <p>Este documento tem validade para comprovação da realização do processo eleitoral eletrônico, conforme registros oficiais armazenados na base de dados da Union Eleições.</p>
+        <p>Este documento tem validade para comprovação da realização do processo eleitoral eletrônico, conforme registros oficiais armazenados na base de dados da Unir Votações.</p>
 
         <div class="assinatura">
             <p>Responsável pela Eleição</p>

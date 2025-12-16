@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Union Eleições - Relatório de Logs do Eleitor</title>
+    <title>Unir Votações - Relatório de Logs do Eleitor</title>
     <link rel="icon" type="image/png" sizes="32x32" href="{{ public_path('img/icon-union/union-eleicoes.png') }}">
     <style>
         @page {
@@ -96,7 +96,7 @@
     <!-- CABEÇALHO FIXO -->
     <header>
         <div class="d-flex">
-            <img src="{{ public_path('img/logotipo-union/union-eleicoes.png') }}" class="l-logo" alt="Union Eleições">
+            <img src="{{ public_path('img/logotipo-union/union-eleicoes.png') }}" class="l-logo" alt="Unir Votações">
             <img src="{{ public_path('storage/' . $configuracao->caminho) }}" class="l-logo" alt="{{ $configuracao->nome_cliente }}">
         </div>
         <h2>Relatório de Logs do Eleitor</h2>
@@ -104,7 +104,7 @@
 
     <!-- RODAPÉ FIXO -->
     <footer>
-        Union Eleições © {{ date('Y') }} — 
+        Unir Votações © {{ date('Y') }} — 
         Página <span class="page-number"></span> —
         Emitido em {{ now()->format('d/m/Y') }} às {{ now()->format('H:i:s') }} (Horário de Brasília)
     </footer>

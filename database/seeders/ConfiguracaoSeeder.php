@@ -13,8 +13,8 @@ class ConfiguracaoSeeder extends Seeder
     public function run(): void
     {
         Configuracao::updateOrCreate([
-            'nome_eleicao' => 'Union Eleições',
-            'razao_social' => 'Union Eleições LTDA',
+            'nome_eleicao' => 'Unir Votações',
+            'razao_social' => 'Unir Votações LTDA',
             'cnpj' => '01002003000405',
             'suporte_0800' => true,
             'numero_suporte_0800' => '0800 000 0000',
@@ -22,7 +22,7 @@ class ConfiguracaoSeeder extends Seeder
             'numero_suporte_whatsapp' => '51999999999',
             'data_hora_inicio_eleicao' => now()->addDays(7),
             'data_hora_final_eleicao' => now()->addDays(8),
-            'remetente_do_email' => 'Union Eleições - <no-reply@unioneleicoes.com.br>',
+            'remetente_do_email' => 'Unir Votações - <no-reply@unirvotacoes.com.br>',
             'assunto_do_email' => 'Eleição de Cipa 2025 - 05/11/2025',
             'mensagem_eleitor_email' => 'mensagem de e-mail',
             'mensagem_eleitor_sms' => 'mensagem de sms',

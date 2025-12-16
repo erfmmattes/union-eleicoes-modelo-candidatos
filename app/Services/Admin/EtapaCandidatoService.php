@@ -94,34 +94,37 @@ class EtapaCandidatoService
         }
     }
 
-    public function toggleStatus($id)
+    public function mudarStatus(int $id, int $novoStatus): int
     {
         try {
-            $etapa = $this->buscar($id);
-            if ($etapa->escolhas()->exists()) {
-                return [
-                    'allowed' => false,
-                    'etapa' => $etapa
-                ];
+            $etapa = $this->etapaCandidatoRepository->find($id);
+
+            if (!$etapa) {
+                throw new \DomainException('Etapa não encontrada.');
             }
-            $etapa->status = !$etapa->status;
-            $etapa->save();
 
-            return [
-                'allowed' => true,
-                'etapa' => $etapa
-            ];
+            if ($novoStatus === 1) {
+                $existeAtiva = $this->etapaCandidatoRepository->verificaEtapaAtiva($id);
 
-        } catch (Exception $e) {
+                if ($existeAtiva) {
+                    throw new \DomainException('Já existe uma etapa ativa.');
+                }
+            }
+
+            $this->etapaCandidatoRepository->atualizarStatus($id, $novoStatus);
+
+            return $novoStatus;
+
+        } catch (\DomainException $e) {
+            throw $e;
+
+        } catch (\Throwable $e) {
             $this->logRepository->criarLog(
-                'erro - toggleStatus - EtapaCandidatoService',
-                $e->getMessage()
+                'erro - mudarStatus - EtapaCandidatoService',
+                $e
             );
 
-            return [
-                'allowed' => false,
-                'error' => true
-            ];
+            throw new \RuntimeException('Erro interno ao alterar status.');
         }
     }
 }

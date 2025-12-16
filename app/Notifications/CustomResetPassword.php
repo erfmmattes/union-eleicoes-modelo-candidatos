@@ -41,7 +41,7 @@ class CustomResetPassword extends Notification
 
         // aqui usamos a view HTML que fizemos
         return (new \Illuminate\Notifications\Messages\MailMessage)
-            ->subject('Recuperação de Senha - Union Eleições')
+            ->subject('Recuperação de Senha - Unir Votações')
             ->view(
                 'emails.resetPassword',
                 [

@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>@yield('title', 'Union Eleições')</title>
+  <title>@yield('title', 'Unir Votações')</title>
 
   <!-- Fontes e icon -->
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wdth,wght@75..100,200..900&display=swap" rel="stylesheet">
@@ -41,7 +41,15 @@
       background-color: {{ $configuracao->cor_principal }}; /* <<<<----- Aqui vai a cor do cliente ----->>>> */
     }
     header .logo-union {
-      width: 200px;
+      margin-left: 40px;
+      width: 120px;
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{
+        width:48px;height:48px;border-radius:10px;
+        background:linear-gradient(135deg,#4f46e5,#3b82f6);
+        display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px!important;
+        box-shadow: 0 6px 18px rgba(79,70,229,0.18);
     }
     /* ---------- SIDEBAR ---------- */
     .sidebar {
@@ -66,7 +74,9 @@
     .sidebar a.active {
       border-radius: 8px;
       font-weight: 600;
-      text-decoration: underline;
+      background-color: rgba(255, 255, 255, 0.3);
+      margin: 5 10px;
+      width: 90%;
     }
     /* ---------- MAIN ---------- */
     main {
@@ -111,6 +121,12 @@
         color: white;
         box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.3);
     }
+    .log-im-m {
+      display: block !important;
+    }
+    .log-im-m-d {
+      display: none !important;
+    }
     /* ---------- MOBILE ---------- */
     @media (max-width: 992px) {
       .sidebar {
@@ -136,6 +152,12 @@
       .alt-telefone {
         margin-bottom: 25px;
       }
+      .log-im-m {
+        display: none !important;
+      }
+      .log-im-m-d {
+        display: block !important;
+      }
     }
     @media (min-width: 993px) {
       .hamburger-btn {
@@ -149,9 +171,19 @@
 
   <!-- HEADER -->
   <header>
-    <a href="{{ route('home.index') }}">
-        <img src="{{ asset('img/logotipo-union/union-eleicoes.png') }}" alt="Union Eleições" class="logo-union">
+    <a href="{{ route('home.index') }}" class="text-decoration-none d-flex align-items-center fw-bold text-dark fs-5">
+        <img src="{{ asset('img/logotipo-union/union-eleicoes-branca.png') }}" alt="Unir Votações" class="logo-union">
+        <!-- <div class="brand">
+            <div class="logo">UV</div>
+            <div>
+            <div style="font-weight:700">Unir Votações</div>
+            </div>
+        </div> -->
     </a>
+
+    @if(session('front_logado'))
+      <h3 class="h6 fw-bold text-end mt-2 log-im-m">Bem-vindo, {{ session('eleitor_nome') }}!</h3>
+    @endif
 
     <button class="hamburger-btn" onclick="toggleSidebar()">☰</button>
   </header>
@@ -163,11 +195,11 @@
       @if(!session('front_logado'))
           <a class="{{ Route::currentRouteName() == 'home.index' ? 'active' : '' }}"
             href="{{ route('home.index') }}">
-              Home
+              <i class="fa-solid fa-house me-2"></i> Home
           </a>
           <a class="{{ Route::currentRouteName() == 'recuperarSenha.index' ? 'active' : '' }}"
             href="{{ route('recuperarSenha.index') }}">
-              Recuperar senha
+              <i class="fa-solid fa-unlock-keyhole me-2"></i> Recuperar senha
           </a>
       @endif
 
@@ -183,44 +215,49 @@
           )
           <a class="{{ Route::currentRouteName() == 'loginEleicao.homeLogadoFront' ? 'active' : '' }}"
             href="{{ route('loginEleicao.homeLogadoFront') }}">
-              Home
+              <i class="fa-solid fa-house me-2"></i> Home
           </a>
 
           @if($configuracao->menu_documentos == 1)
               <a class="{{ Route::currentRouteName() == 'documentos.index' ? 'active' : '' }}"
                 href="{{ route('documentos.index') }}">
-                  Documentos
+                  <i class="fa-solid fa-file me-2 ms-1"></i> Documentos
               </a>
           @endif
 
           @if($configuracao->menu_ajuda == 1)
               <a class="{{ Route::currentRouteName() == 'ajuda.index' ? 'active' : '' }}"
                 href="{{ route('ajuda.index') }}">
-                  Ajuda
+                  <i class="fa-solid fa-circle-question me-2 ms-1"></i> Ajuda
               </a>
           @endif
 
           @if($configuracao->menu_trocar_senha == 1)
               <a class="{{ Route::currentRouteName() == 'trocarSenha.index' ? 'active' : '' }}"
                 href="{{ route('trocarSenha.index') }}">
-                  Trocar senha
+                  <i class="fa-solid fa-key me-2"></i> Trocar senha
               </a>
           @endif
 
-          <a href="{{ route('loginEleicao.logout') }}">Sair</a>
+          <a href="{{ route('loginEleicao.logout') }}">
+            <i class="fa-solid fa-right-from-bracket me-2"></i> Sair
+          </a>
       @endif
 
   </div>
 
   <!-- MAIN -->
   <main>
+    @if(session('front_logado'))
+      <h3 class="h6 fw-bold text-end mt-4 log-im-m-d">Bem-vindo, {{ session('eleitor_nome') }}!</h3>
+    @endif
     @yield('content')
   </main>
 
   <!-- FOOTER -->
   <footer>
     <div class="container text-center alt-telefone">
-          &copy; {{ date('Y') }} Union Eleições - Todos os direitos reservados
+          &copy; {{ date('Y') }} Unir Votações - Todos os direitos reservados
           @if(!empty($configuracao->suporte_0800 == 1))
               | Suporte: 
               <a href="tel:{{ $configuracao->numero_suporte_0800 }}">
@@ -232,7 +269,7 @@
 
   @if(!empty($configuracao->suporte_0800 == 1))
     <a 
-        href="https://wa.me/5511999998888?text=Ol%C3%A1%2C%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20o%20assunto." 
+        href="https://wa.me/{{ $configuracao->numero_suporte_whatsapp }}?text=Ol%C3%A1%2C%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es%20sobre%20o%20assunto." 
         target="_blank" 
         class="whatsapp-float"
         aria-label="Fale conosco pelo WhatsApp"
