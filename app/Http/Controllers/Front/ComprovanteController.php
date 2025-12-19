@@ -26,7 +26,7 @@ class ComprovanteController extends Controller
         }
         $listaComprovantes = $this->comprovanteService->getComprovanteEleitor();
 
-        if (!$listaComprovantes) {
+        if ($listaComprovantes === null || $listaComprovantes->isEmpty()) {
             return redirect()
                 ->route('loginEleicao.homeLogadoFront')
                 ->with('error', 'Nenhum comprovante disponível para este eleitor.');

@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\AjudaAdminController;
 use App\Http\Controllers\Admin\SetoresAdminController;
 use App\Http\Controllers\Admin\EtapaCandidatoController;
 use App\Http\Controllers\Admin\EscolhaCandidatoController;
+use App\Http\Controllers\Admin\ApuracaoController;
 use App\Http\Controllers\Admin\DadosEleicaoController;
 use App\Http\Controllers\Admin\EleitorLogadoController;
 use App\Http\Controllers\Admin\ListaEleitoresController;
@@ -217,6 +218,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('/escolhas/{id}', [EscolhaCandidatoController::class, 'update'])->name('adminEscolhas.update');
     Route::delete('/escolhas/{id}', [EscolhaCandidatoController::class, 'destroy'])->name('adminEscolhas.destroy');
     Route::post('escolhas/{id}/status', [EscolhaCandidatoController::class, 'toggleStatus'])->name('adminEscolhas.status');
+
+    // Apuração do Admin
+    Route::get('/apuracao', [ApuracaoController::class, 'index'])->name('adminApuracao.index');
+    Route::get('/apuracao/{etapaId}', [ApuracaoController::class, 'show'])->name('adminApuracao.show');
+    Route::get('/apuracao-total-pdf/{etapaId}', [ApuracaoController::class, 'apuracaoTotalPdf'])->name('adminApuracao.apuracaoTotalPdf');
+    Route::get('/votantes-apuracao-pdf/{etapaSequencia}', [ApuracaoController::class, 'votantesApuracaoPdf'])->name('adminApuracao.votantesApuracaoPdf');
 
     // Dados da Eleição do Admin
     Route::get('/dados-eleicao', [DadosEleicaoController::class, 'index'])->name('adminDadosEleicao.index');

@@ -16,9 +16,6 @@ class EleitorLogado extends Model
         'ip',
     ];
 
-    /**
-     * 🔗 Relacionamento com o Eleitor
-     */
     public function eleitor()
     {
         return $this->belongsTo(Eleitor::class, 'eleitor_id');

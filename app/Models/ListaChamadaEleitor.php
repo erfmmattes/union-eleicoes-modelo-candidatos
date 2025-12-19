@@ -16,9 +16,6 @@ class ListaChamadaEleitor extends Model
         'ip',
     ];
 
-    /**
-     * 🔗 Relacionamento com Eleitor
-     */
     public function eleitor()
     {
         return $this->belongsTo(Eleitor::class, 'eleitor_id');

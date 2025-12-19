@@ -9,10 +9,8 @@ class EscolhaCandidato extends Model
 {
     use HasFactory;
 
-    // 🔗 Nome da tabela
     protected $table = 'escolhas_candidatos';
 
-    // 🧱 Campos que podem ser preenchidos em massa
     protected $fillable = [
         'etapas_candidatos_id',
         'nome',
@@ -25,16 +23,13 @@ class EscolhaCandidato extends Model
         'status',
     ];
 
-    // 🕒 Controla automaticamente created_at / updated_at
     public $timestamps = true;
 
-    // 🎛️ Casts automáticos
     protected $casts = [
         'tem_foto' => 'boolean',
         'status' => 'boolean',
     ];
 
-    // 🔗 Relacionamento: uma escolha pertence a uma etapa
     public function etapa()
     {
         return $this->belongsTo(EtapaCandidato::class, 'etapas_candidatos_id');

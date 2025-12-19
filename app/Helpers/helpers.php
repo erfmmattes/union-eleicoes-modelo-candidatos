@@ -102,3 +102,11 @@ if (!function_exists('formatar0800')) {
     }
 }
 // Final - Função para formatar número 0800
+// Início - Função para formatar Etapa
+if (!function_exists('formatarEtapa')) {
+    function formatarEtapa(string $valor): string
+    {
+        return ucfirst(str_replace('_', ' ', $valor));
+    }
+}
+// Final - Função para formatar Etapa

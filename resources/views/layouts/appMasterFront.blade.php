@@ -8,7 +8,7 @@
 
   <!-- Fontes e icon -->
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wdth,wght@75..100,200..900&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/icon-union/union-eleicoes.png') }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/icon-unir/unir-votacoes.png') }}">
 
   <!-- Font Awesome 6 for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -40,16 +40,9 @@
       border-bottom-right-radius: 15px;
       background-color: {{ $configuracao->cor_principal }}; /* <<<<----- Aqui vai a cor do cliente ----->>>> */
     }
-    header .logo-union {
+    header .logo-unir {
       margin-left: 40px;
       width: 120px;
-    }
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo{
-        width:48px;height:48px;border-radius:10px;
-        background:linear-gradient(135deg,#4f46e5,#3b82f6);
-        display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px!important;
-        box-shadow: 0 6px 18px rgba(79,70,229,0.18);
     }
     /* ---------- SIDEBAR ---------- */
     .sidebar {
@@ -171,15 +164,17 @@
 
   <!-- HEADER -->
   <header>
-    <a href="{{ route('home.index') }}" class="text-decoration-none d-flex align-items-center fw-bold text-dark fs-5">
-        <img src="{{ asset('img/logotipo-union/union-eleicoes-branca.png') }}" alt="Unir Votações" class="logo-union">
-        <!-- <div class="brand">
-            <div class="logo">UV</div>
-            <div>
-            <div style="font-weight:700">Unir Votações</div>
-            </div>
-        </div> -->
-    </a>
+    @if(!session('front_logado'))
+      <a href="{{ route('home.index') }}" class="text-decoration-none d-flex align-items-center fw-bold text-dark fs-5">
+          <img src="{{ asset('img/logotipo-unir/unir-votacoes-branca.png') }}" alt="Unir Votações" class="logo-unir">
+      </a>
+    @endif
+
+    @if(session('front_logado'))
+      <a href="{{ route('loginEleicao.homeLogadoFront') }}" class="text-decoration-none d-flex align-items-center fw-bold text-dark fs-5">
+          <img src="{{ asset('img/logotipo-unir/unir-votacoes-branca.png') }}" alt="Unir Votações" class="logo-unir">
+      </a>
+    @endif
 
     @if(session('front_logado'))
       <h3 class="h6 fw-bold text-end mt-2 log-im-m">Bem-vindo, {{ session('eleitor_nome') }}!</h3>

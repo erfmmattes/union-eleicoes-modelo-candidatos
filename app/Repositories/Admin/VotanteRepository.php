@@ -56,12 +56,10 @@ class VotanteRepository
     public function listarTodosSemPaginacao($etapa)
     {
         return $this->eleitor
-            ->select('eleitores.*', 'votos.votado_em', 'votos.etapa')
+            ->select('eleitores.*', 'votos.eleitor_id', 'votos.votado_em', 'votos.etapa')
             ->leftJoin('votos', 'votos.eleitor_id', '=', 'eleitores.id')
-            ->where('eleitores.votou', '=', '1')
-            ->where('votos.etapa', '=', $etapa)
-            ->orderBy('votos.votado_em', 'desc')
-            ->get();
+            ->where('votos.etapa', '=', 'etapa_' .$etapa)
+            ->orderBy('votos.votado_em', 'desc')->get();
     }
 
     public function listarTodosSemPaginacaoComBusca(?string $busca = null, ?string $etapa = null)
@@ -69,8 +67,7 @@ class VotanteRepository
         $query = $this->eleitor
             ->select('eleitores.*', 'votos.votado_em', 'votos.eleitor_id', 'votos.etapa')
             ->leftJoin('votos', 'votos.eleitor_id', '=', 'eleitores.id')
-            ->where('eleitores.votou', '=', '1')
-            ->where('votos.etapa', '=', $etapa)
+            ->where('votos.etapa', '=', 'etapa_' .$etapa)
             ->orderBy('votos.votado_em', 'desc');
 
         if ($busca) {

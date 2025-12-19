@@ -27,10 +27,6 @@ class EtapaCandidato extends Model
         // 'status' => 'boolean',
     ];
 
-    /**
-     * 🔗 Relacionamento com as escolhas de candidatos
-     * Uma etapa pode ter várias escolhas.
-     */
     public function escolhas()
     {
         return $this->hasMany(EscolhaCandidato::class, 'etapas_candidatos_id', 'id');

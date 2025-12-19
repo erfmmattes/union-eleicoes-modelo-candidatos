@@ -11,9 +11,6 @@ class UsuarioTelaPermissao extends Model
 
     protected $table = 'usuario_tela_permissoes';
 
-    /**
-     * Campos que podem ser preenchidos em massa
-     */
     protected $fillable = [
         'usuario_id',
         'tela_slug',
@@ -25,9 +22,6 @@ class UsuarioTelaPermissao extends Model
         'deletar',
     ];
 
-    /**
-     * Tipos de dados
-     */
     protected $casts = [
         'criar' => 'boolean',
         'importar_eleitores' => 'boolean',
@@ -37,17 +31,11 @@ class UsuarioTelaPermissao extends Model
         'deletar' => 'boolean',
     ];
 
-    /**
-     * Relacionamento com User
-     */
     public function usuario()
     {
         return $this->belongsTo(User::class, 'usuario_id');
     }
 
-    /**
-     * Método helper para verificar permissão
-     */
     public function pode(string $acao): bool
     {
         return $this->{$acao} ?? false;

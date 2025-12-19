@@ -8,7 +8,7 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/icon-union/union-eleicoes.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/icon-unir/unir-votacoes.png') }}">
     
     <!-- Font Awesome 6 for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -77,7 +77,7 @@
         .sidebar-nav .nav-link[aria-expanded="true"] i.fas.fa-chevron-down {
             transform: rotate(180deg);
         }
-        .logo-union {
+        .logo-unir {
             width: 180px;
         }
         .fundo-circular {
@@ -171,7 +171,7 @@
 
                     <div class="sidebar-header d-flex justify-content-center">
                         <a class="navbar-brand fw-bold text-dark fs-5" href="{{ route('admin.home') }}">
-                            <img src="{{ asset('img/logotipo-union/union-eleicoes.png') }}" alt="Unir Votações" class="logo-union">
+                            <img src="{{ asset('img/logotipo-unir/unir-votacoes.png') }}" alt="Unir Votações" class="logo-unir">
                         </a>
                     </div>
 

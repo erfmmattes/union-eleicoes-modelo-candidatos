@@ -106,9 +106,10 @@ class EtapaCandidatoService
             if ($novoStatus === 1) {
                 $existeAtiva = $this->etapaCandidatoRepository->verificaEtapaAtiva($id);
 
-                if ($existeAtiva) {
-                    throw new \DomainException('Já existe uma etapa ativa.');
-                }
+                // Esse ajuste só vale para assembléia
+                // if ($existeAtiva) {
+                //     throw new \DomainException('Já existe uma etapa ativa.');
+                // }
             }
 
             $this->etapaCandidatoRepository->atualizarStatus($id, $novoStatus);

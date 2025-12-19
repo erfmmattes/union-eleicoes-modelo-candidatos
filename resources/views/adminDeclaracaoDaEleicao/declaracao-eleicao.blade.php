@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Unir Votações - Declaração da Eleição</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ public_path('img/icon-union/union-eleicoes.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ public_path('img/icon-unir/unir-votacoes.png') }}">
     <style>
         @page {
             margin: 100px 40px 60px 40px;
@@ -105,7 +105,7 @@
     <!-- HEADER FIXO -->
     <header>
         <div class="logos">
-            <img src="{{ public_path('img/logotipo-union/union-eleicoes.png') }}" alt="Unir Votações">
+            <img src="{{ public_path('img/logotipo-unir/unir-votacoes.png') }}" alt="Unir Votações">
             @if(!empty($dados['caminho']))
                 <img src="{{ public_path('storage/' . $dados['caminho']) }}" class="l-logo" alt="{{ $dados['razao_social'] }}">
             @endif

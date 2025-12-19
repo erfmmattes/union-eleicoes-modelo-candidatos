@@ -192,7 +192,7 @@
                                             <span class="badge bg-secondary">Não</span>
                                         @endif
                                     </td>
-                                    <td>{{ $votante->etapa }}</td>
+                                    <td>{{ formatarEtapa($votante->etapa) }}</td>
                                     <td>{{ $votante->ip }}</td>
                                     <td class="text-center">
                                         <a href="{{ route('admin.adminVotantes.show', $votante->id) }}" title="Ver" class="btn btn-sm btn-outline-primary mb-2 mb-md-0 me-md-2">

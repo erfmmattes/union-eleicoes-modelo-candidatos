@@ -26,6 +26,7 @@ class TelaSeeder extends Seeder
             ['slug' => 'escolhas', 'nome' => 'Escolhas', 'ativo' => '1'],
             ['slug' => 'perguntas', 'nome' => 'Perguntas', 'ativo' => '1'],
             ['slug' => 'relatorios', 'nome' => 'Relatórios', 'ativo' => '1'],
+            ['slug' => 'apuracaoDaEleicao', 'nome' => 'Apuração da Eleição', 'ativo' => '1'],
             ['slug' => 'dadosDaEleicao', 'nome' => 'Dados da Eleição', 'ativo' => '1'],
             ['slug' => 'eleitoresLogados', 'nome' => 'Eleitores Logados', 'ativo' => '1'],
             ['slug' => 'listaDeEleitores', 'nome' => 'Lista de Eleitores', 'ativo' => '1'],

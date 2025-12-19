@@ -67,7 +67,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="{{ asset('img/logotipo-union/union-eleicoes.png') }}" alt="Unir Votações">
+            <img src="{{ asset('img/logotipo-unir/unir-votacoes.png') }}" alt="Unir Votações">
         </div>
         <div class="content">
             <h2>Olá, {{ $usuario->name }}!</h2>

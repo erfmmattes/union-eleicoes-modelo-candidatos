@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Unir Votações - Relatório de Zerésima</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ public_path('img/icon-union/union-eleicoes.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ public_path('img/icon-unir/unir-votacoes.png') }}">
     <style>
         @page { margin: 100px 40px 60px 40px; }
         header {
@@ -83,7 +83,7 @@
 
 <header>
      <div class="d-flex">
-        <img src="{{ public_path('img/logotipo-union/union-eleicoes.png') }}" class="l-logo" alt="Unir Votações">
+        <img src="{{ public_path('img/logotipo-unir/unir-votacoes.png') }}" class="l-logo" alt="Unir Votações">
         <img src="{{ public_path('storage/' . $configuracao->caminho) }}" class="l-logo" alt="{{ $configuracao->nome_cliente }}">
     </div>
     <h2>Relatório de Zerésima</h2>

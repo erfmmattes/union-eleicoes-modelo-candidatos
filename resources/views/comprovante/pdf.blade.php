@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Unir Votações - Comprovante de Votação</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ public_path('img/icon-union/union-eleicoes.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ public_path('img/icon-unir/unir-votacoes.png') }}">
 
     <style>
         @page {
@@ -87,7 +87,7 @@
 
 <header>
     <div>
-        <img src="{{ public_path('img/logotipo-union/union-eleicoes.png') }}" alt="Unir Votações">
+        <img src="{{ public_path('img/logotipo-unir/unir-votacoes.png') }}" alt="Unir Votações">
 
         @if(isset($configuracao) && !empty($configuracao->caminho))
             <img src="{{ public_path('storage/' . $configuracao->caminho) }}" class="l-logo" alt="{{ $configuracao->nome_cliente }}">

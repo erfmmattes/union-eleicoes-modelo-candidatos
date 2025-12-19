@@ -25,6 +25,7 @@ class UsuarioTelaSeeder extends Seeder
             ['usuario_id' => '1', 'tela_slug' => 'etapas', 'criar' => '1', 'ver' => '1', 'editar' => '1', 'deletar' => '1'],
             ['usuario_id' => '1', 'tela_slug' => 'escolhas', 'criar' => '1', 'ver' => '1', 'editar' => '1', 'deletar' => '1'],
             ['usuario_id' => '1', 'tela_slug' => 'relatorios', 'criar' => '1', 'ver' => '1', 'editar' => '1', 'deletar' => '1'],
+            ['usuario_id' => '1', 'tela_slug' => 'apuracaoDaEleicao', 'criar' => '1', 'ver' => '1', 'editar' => '1', 'deletar' => '1'],
             ['usuario_id' => '1', 'tela_slug' => 'dadosDaEleicao', 'criar' => '1', 'ver' => '1', 'editar' => '1', 'deletar' => '1'],
             ['usuario_id' => '1', 'tela_slug' => 'eleitoresLogados', 'criar' => '1', 'ver' => '1', 'editar' => '1', 'deletar' => '1'],
             ['usuario_id' => '1', 'tela_slug' => 'listaDeEleitores', 'criar' => '1', 'ver' => '1', 'editar' => '1', 'deletar' => '1'],

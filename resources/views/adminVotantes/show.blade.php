@@ -5,7 +5,7 @@
 <div class="container">
     <!-- Page Header -->
     <div class="mb-5">
-        <h1 class="h2 fw-bolder text-dark">Detalhes do Votante: {{ $votante->nome }} - {{ $votante->etapa }}ª - Etapa</h1>
+        <h1 class="h2 fw-bolder text-dark">Detalhes do Votante: {{ $votante->nome }} - {{ formatarEtapa($votante->etapa) }}ª - Etapa</h1>
         <p class="text-muted mt-1">
             Visualize as informações completas do votante armazenado no sistema.
         </p>
@@ -48,6 +48,12 @@
                 @else
                     <span class="badge bg-secondary px-3 py-2">Não</span>
                 @endif
+            </div>
+
+            <!-- Etapa -->
+            <div class="mb-3">
+                <p class="mb-1"><strong>Etapa:</strong></p>
+                <p class="text-dark">{{ formatarEtapa($votante->etapa) }}</p>
             </div>
 
             <!-- IP -->

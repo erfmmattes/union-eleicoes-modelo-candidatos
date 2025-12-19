@@ -13,7 +13,6 @@ class Setor extends Model
         'status',
     ];
 
-    /** Relação com as etapas do candidato */
     public function etapas()
     {
         return $this->hasMany(EtapaCandidato::class, 'setores_id', 'id');

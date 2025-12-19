@@ -94,7 +94,8 @@
 
                                     <td class="col-botoes text-center"
                                         data-status="{{ $etapa->status }}"
-                                        data-id="{{ $etapa->id }}">
+                                        data-id="{{ $etapa->id }}"
+                                        data-sequencia="{{ $etapa->sequencia }}">
                                     </td>
 
                                     {{-- AÇÕES PADRÃO --}}
@@ -345,6 +346,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const tdStatus  = row.querySelector('.col-status');
         const tdButtons = row.querySelector('.col-botoes');
         const id        = tdButtons.dataset.id;
+        const etapaSequencia        = 'etapa_' + tdButtons.dataset.sequencia;
 
         const cfg = statusMap[status];
         if (!cfg) return;
@@ -355,6 +357,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 ${cfg.label}
             </span>
         `;
+
+        const apuracaoPdfBaseUrl = "{{ url('/admin/apuracao-total-pdf') }}";
+        const apuracaoTelaBaseUrl = "{{ url('/admin/apuracao') }}";
+        const votantesPdfBaseUrl =
+        "{{ route('admin.adminApuracao.votantesApuracaoPdf', ['etapaSequencia' => ':etapa']) }}";
+        const url = votantesPdfBaseUrl.replace(':etapa', etapaSequencia);
+
 
         // BOTÕES
         if (status === 0) {
@@ -371,7 +380,30 @@ document.addEventListener("DOMContentLoaded", () => {
                     data-id="${id}" data-action="finalizar">FINALIZAR</button>
             `;
         }
-        else {
+        else if (status === 2) {
+            tdButtons.innerHTML = `
+                <a href="${apuracaoPdfBaseUrl}/${id}"
+                title="Apuração em PDF"
+                class="btn btn-sm btn-primary btn-etapa texto-padrao"
+                target="_blank">
+                    <i class="fas fa-file-pdf"></i>
+                </a>
+
+                <a href="${apuracaoTelaBaseUrl}/${id}"
+                title="Apuração em Tela"
+                class="btn btn-sm btn-secondary btn-etapa texto-padrao"
+                target="_blank">
+                    <i class="fas fa-chart-bar"></i>
+                </a>
+
+                <a href="${url}"
+                title="Relatório de Votantes"
+                class="btn btn-sm btn-success btn-etapa texto-padrao"
+                target="_blank">
+                    <i class="fa-solid fa-user-check"></i>
+                </a>
+            `;
+        } else {
             tdButtons.innerHTML = `<span class="text-muted">—</span>`;
         }
 

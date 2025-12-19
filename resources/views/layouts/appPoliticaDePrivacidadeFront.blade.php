@@ -8,7 +8,7 @@
 
   <!-- Fontes e icon -->
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wdth,wght@75..100,200..900&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/icon-union/union-eleicoes.png') }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/icon-unir/unir-votacoes.png') }}">
 
   <!-- Bootstrap + Estilo customizado -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -38,7 +38,7 @@
       border-bottom-left-radius: 15px;
       border-bottom-right-radius: 15px;
     }
-    header .logo-union {
+    header .logo-unir {
       width: 200px;
     }
     /* ---------- MAIN ---------- */
@@ -98,7 +98,7 @@
   <!-- HEADER -->
   <header>
     <a href="{{ route('home.index') }}" class="m-auto">
-        <img src="{{ asset('img/logotipo-union/union-eleicoes.png') }}" alt="Unir Votações" class="logo-union">
+        <img src="{{ asset('img/logotipo-unir/unir-votacoes.png') }}" alt="Unir Votações" class="logo-unir">
     </a>
   </header>
 

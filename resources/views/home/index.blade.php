@@ -9,7 +9,7 @@
                 alt="Logo {{ $configuracao->nome_eleicao }}" 
                 class="medida-logo-cliente">
         @else
-            <img src="{{ asset('img/logotipo-union/union-eleicoes.png') }}" 
+            <img src="{{ asset('img/logotipo-unir/unir-votacoes.png') }}" 
                 alt="Logo Unir Votações" 
                 class="medida-logo-cliente">
         @endif

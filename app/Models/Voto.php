@@ -22,27 +22,38 @@ class Voto extends Model
         'votado_em' => 'datetime',
     ];
 
-    /**
-     * Relacionamento: um voto pertence a um candidato.
-     */
     public function candidato()
     {
         return $this->belongsTo(Candidato::class);
     }
 
-    /**
-     * Criptografar o voto automaticamente ao salvar.
-     */
     public function setVotoAttribute($value)
     {
         $this->attributes['voto'] = encrypt($value);
     }
 
-    /**
-     * Descriptografar o voto ao acessar.
-     */
     public function getVotoAttribute($value)
     {
         return decrypt($value);
+    }
+
+    public function votouEm(\App\Models\EscolhaCandidato $candidato): bool
+    {
+        $votoCripto = $this->getOriginal('voto');
+
+        try {
+            $votoReal = \Illuminate\Support\Facades\Crypt::decryptString($votoCripto);
+
+            $votoData = json_decode($votoReal, true);
+
+            if (!isset($votoData['escolhas']) || !is_array($votoData['escolhas'])) {
+                return false;
+            }
+
+            return in_array((string)$candidato->id, $votoData['escolhas'], true);
+
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }

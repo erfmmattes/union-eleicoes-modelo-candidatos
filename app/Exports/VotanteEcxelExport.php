@@ -37,6 +37,8 @@ class VotanteEcxelExport implements FromCollection, WithHeadings
                     $data[$campo] = $votante->votou == '1' ? 'Sim' : 'Não';
                 } elseif($campo === 'cpf_cnpj') {
                     $data[$campo] = formatarCpfCnpj($votante->cpf_cnpj);
+                } elseif($campo === 'etapa') {
+                    $data[$campo] = formatarEtapa($votante->etapa);
                 } else {
                     $data[$campo] = $votante->$campo ?? '-';
                 }
